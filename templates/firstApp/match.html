@@ -1,0 +1,185 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+<div class="container">
+    {%for p in match_details %}
+    <h5>Match Date : {{p.Match_Date}}</h5>
+    <h5>Location : {{p.City_Name}} , {{p.Host_Country}}</h5>
+    <h5>Teams : {{p.Team_Name_Id}} vs {{p.Opponent_Team_Id}}</h5>
+
+    {% if p.Win_Type == 'by runs' %}
+    <h5>Result : {{p.Match_Winner_Id}} won by {{p.Won_By}} runs</h5>
+    {% else %}
+    <h5>Result : {{p.Match_Winner_Id}} won by {{p.Won_By}} wickets</h5>
+    {% endif %}
+    <h5>{{p.Toss_Winner_Id}} won the toss and elected to {{p.Toss_Decision}}</h5>
+    {% endfor %}
+</div>
+
+<div class="table-responsive">
+    <h4><strong>1st Innings</strong> - Batting</h4>
+    <table class = "table table-striped table-bordered table-hover">
+        <thead>
+            <td>Player</td>
+            <td>Dismissal</td>
+            <td>Runs</td>
+            <td>Balls</td>
+            <td>4s</td>
+            <td>6s</td>
+            <td>Str. rate</td>
+        </thead>
+        <tbody>
+            {%for p in batting %}
+                {%if p.Innings_Id == 1 %}
+            <tr>
+                <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                {% if p.dissimal_type == 'bowled' %}
+                <td>b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'run out' or p.dissimal_type == 'runout'%}
+                <td>Run out ({{p.fielder_id}})</td>
+
+                {% elif p.dissimal_type == 'caught'%}
+                <td>c {{p.fielder_id}} b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'stumped'%}
+                <td>st {{p.fielder_id}} b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'lbw' %}
+                <td>lbw b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'caught and bowled' or p.dissimal_type == 'caughtandbowled' %}
+                <td>c & b {{p.bowler_id}}</td>
+
+                {% else %}
+                <td>Not out</td>
+
+                {% endif %}
+                <td>{{p.runs}}</td>
+                <td>{{p.balls}}</td>
+                <td>{{p.four}}</td>
+                <td>{{p.six}}</td>
+                <td>{{p.str}}</td>
+                {% endif %}
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class = "table table-striped table-bordered table-hover">
+        <h4><strong>1st Innings</strong> - Bowling</h4>
+
+        <thead>
+            <td>Bowler</td>
+            <td>overs</td>
+            <td>runs</td>
+            <td>wickets</td>
+            <td>economy</td>
+
+        </thead>
+        <tbody>
+            {%for p in bowling %}
+                {% if p.innings_id == 1 %}
+                <tr>
+                    <td><a href="/player/{{p.bowler_id}}">{{p.player_name}}</a></td>
+                    <td>{{p.overs}}.{{p.balls}}</td>
+                    <td>{{p.runs}}</td>
+                    {% if p.wickets is null %}
+                    <td>0</td>
+                    {% else %}
+                    <td>{{p.wickets}}</td>
+
+                    {% endif %}
+
+                    <td>{{p.econ}}</td>
+                </tr>
+
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        </table>
+
+    <table class = "table table-striped table-bordered table-hover">
+        <h4><strong>2nd Innings</strong> - Batting</h4>
+
+        <thead>
+            <td>Player</td>
+            <td>Dismissal</td>
+            <td>Runs</td>
+            <td>Balls</td>
+            <td>4s</td>
+            <td>6s</td>
+            <td>Str. rate</td>
+        </thead>
+        <tbody>
+            {%for p in batting %}
+                {%if p.Innings_Id == 2 %}
+            <tr>
+                <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                {% if p.dissimal_type == 'bowled' %}
+                <td>b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'run out' or p.dissimal_type == 'runout'%}
+                <td>Run out ({{p.fielder_id}})</td>
+
+                {% elif p.dissimal_type == 'caught'%}
+                <td>c {{p.fielder_id}} b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'stumped'%}
+                <td>st {{p.fielder_id}} b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'lbw' %}
+                <td>lbw b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type == 'caught and bowled' or p.dissimal_type == 'caughtandbowled'%}
+                <td>c & b {{p.bowler_id}}</td>
+
+                {% elif p.dissimal_type is NULL%}
+                <td>Not out</td>
+
+                {% endif %}
+                <td>{{p.runs}}</td>
+                <td>{{p.balls}}</td>
+                <td>{{p.four}}</td>
+                <td>{{p.six}}</td>
+                <td>{{p.str}}</td>
+                {% endif %}
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class = "table table-striped table-bordered table-hover">
+        <h4><strong>2nd Innings</strong> - Bowling</h4>
+
+        <thead>
+            <td>Bowler</td>
+            <td>overs</td>
+            <td>runs</td>
+            <td>wickets</td>
+            <td>economy</td>
+
+        </thead>
+        <tbody>
+            {%for p in bowling %}
+                {% if p.innings_id == 2 %}
+                <tr>
+                    <td><a href="/player/{{p.bowler_id}}">{{p.player_name}}</a></td>
+                    <td>{{p.overs}}.{{p.balls}}</td>
+                    <td>{{p.runs}}</td>
+                    {% if p.wickets is null %}
+                    <td>0</td>
+                    {% else %}
+                    <td>{{p.wickets}}</td>
+
+                    {% endif %}
+
+                    <td>{{p.econ}}</td>
+                </tr>
+
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        </table>
+{% endblock content %}

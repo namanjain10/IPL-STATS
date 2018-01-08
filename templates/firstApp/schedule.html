@@ -1,0 +1,46 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+
+<div class="dropdown" style = "float : right">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style = "background-color : rgba(255, 237, 4, 0.51)">
+        Select Season
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="/season/1/">2008</a></li>
+        <li><a href="/season/2/">2009</a></li>
+        <li><a href="/season/3/">2010</a></li>
+        <li><a href="/season/4/">2011</a></li>
+        <li><a href="/season/5/">2012</a></li>
+        <li><a href="/season/6/">2013</a></li>
+        <li><a href="/season/7/">2014</a></li>
+        <li><a href="/season/8/">2015</a></li>
+        <li><a href="/season/9/">2016</a></li>
+    </ul>
+</div>
+
+<h1>Schedule</h1>
+<table class = "table table-striped table-bordered table-hover">
+    <thead>
+        <td>Match Date</td>
+        <td>Home Team</td>
+        <td>Visiting Team</td>
+        <td>Venue</td>
+        <td>City</td>
+        <td>country</td>
+    </thead>
+    <tbody>
+        {%for p in match_details %}
+        <tr>
+            <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
+            <td>{{p.Team_Name_Id}}</td>
+            <td>{{p.Opponent_Team_Id}}</td>
+            <td>{{p.Venue_Name}}</td>
+            <td>{{p.City_Name}}</td>
+            <td>{{p.Host_Country}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

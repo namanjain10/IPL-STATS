@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>MY APP</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static "css/index.css" %}">
+
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active"><a href="/">Home</a></li>
+              <li role="presentation"><a href="#">Players</a></li>
+              <li role="presentation"><a href="#">Teams</a></li>
+              <li role="presentation"><a href="#">Season</a></li>
+            </ul>
+    {% block content %}
+
+        </div>
+        <div class="container">
+            <h1>Dates Of SuperOver</h1>
+            <table class = "table table-striped table-bordered table-hover">
+                <thead>
+                    <td>match id</td>
+                    <td>Date</td>
+
+                </thead>
+                <tbody>
+                    {%for p in SuperOver %}
+                    <tr>
+                        <td><a href="/match/{{p.Match_Id}}">{{p.Match_Id}}</a></td>
+                        <td>{{p.Match_Date}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <h1>Number of times player is out</h1>
+            <table class = "table table-striped table-bordered table-hover">
+                <thead>
+                    <td>match id</td>
+                    <td>Date</td>
+                    <td>count</td>
+                </thead>
+                <tbody>
+                    {%for p in outs %}
+                    <tr>
+                        <td><a href="/player/{{p.Player_dissimal_Id}}">{{p.Player_dissimal_Id}}</a></td>
+                        <td>{{p.Player_Name}}</td>
+                        <td>{{p.count}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/mom">Most Man of the Match Awards</a>
+            <a href="/captain">Captaincy Records</a>
+            {% endblock content %}
+        </div>
+
+        <!-- <img src="{% static "images/naman.jpeg" %}" alt="oopsyyy!!"> -->
+    </body>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    </script>
+
+</html>

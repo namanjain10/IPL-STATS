@@ -1,0 +1,26 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+<h3>Captaincy Records</h3>
+<table class = "table table-striped table-bordered table-hover">
+    <thead>
+        <td>Player name</td>
+        <td>Total</td>
+        <td>Win</td>
+        <td>Loss</td>
+        <td>No Result</td>
+        <td>Toss</td>
+    </thead>
+    <tbody>
+        {%for p in captain %}
+        <tr>
+            <td><a href="/player/{{p.player_id}}">{{p.Player_Name}}</a></td>
+            <td>{{p.total}}</td>
+            <td>{{p.wins}} ({{p.win_percent}}%)</td>
+            <td>{{p.loss}} ({{p.loss_percent}}%)</td>
+            <td>{{p.nr}}</td>
+            <td>{{p.toss}} ({{p.toss_percent}}%)</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
