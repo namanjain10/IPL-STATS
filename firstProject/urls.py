@@ -28,7 +28,8 @@ urlpatterns = [
     url(r'^help/', views.test.as_view()),
     url(r'^mom/', views.manOfTheMatchView.as_view()),
     url(r'^captain/', views.captainView.as_view()),
-    url(r'^api/', views.playerView.as_view()),
+    url(r'^api/', views.playerViewApi.as_view()),
+    url(r'^test/', views.apiView)
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)
