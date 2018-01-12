@@ -20,89 +20,89 @@ def integer(x) :
     except :
         return None
 
-with open('/home/shubham/Desktop/ipl/Season.csv','r') as f:
-    reader = csv.DictReader(f)  #DictWriter
-    for row in reader:
-
-        t = Season (
-        Season_Id = integer(row['Season_Id']),
-        Season_Year = integer(row['Season_Year']),
-        Orange_Cap_Id = integer(row['Orange_Cap_Id']),
-        Purple_Cap_Id = integer(row['Purple_Cap_Id']),
-        Man_of_the_Series_Id = integer(row['Man_of_the_Series_Id']))
-
-        t.save()
-
-print (1)
-
-with open('/home/shubham/Desktop/ipl/Player.csv','r') as f:
-    reader = csv.DictReader(f)  #DictWriter
-    for row in reader:
-
-        t = Player.objects.get_or_create (
-        Player_Id = integer (row['Player_Id']),
-        Player_Name = row['Player_Name'],
-        DOB = date(row['DOB']),
-        Batting_Hand = row['Batting_Hand'],
-        Bowling_Skill = row['Bowling_Skill'],
-        Country = row['Country'],
-        Is_Umpire = integer (row['Is_Umpire']))
-        #
-        # t.save()
-print (2)
-
-with open('/home/shubham/Desktop/ipl/Match.csv','r') as f:
-    reader = csv.DictReader(f)  #DictWriter
-    for row in reader:
-
-        t = Match (
-        Match_Id = integer(row['Match_Id']),
-        Match_Date = date(row['Match_Date']),
-        Team_Name_Id = integer(row['Team_Name_Id']),
-        Opponent_Team_Id = integer(row['Opponent_Team_Id']),
-        Season_Id = integer(row['Season_Id']),
-        Venue_Name = row['Venue_Name'],
-        Toss_Winner_Id = integer(row['Toss_Winner_Id']),
-        Toss_Decision = row['Toss_Decision'],
-        IS_Superover = integer(row['IS_Superover']),
-        IS_Result = integer(row['IS_Result']),
-        Is_DuckWorthLewis = integer(row['Is_DuckWorthLewis']),
-        Win_Type = row['Win_Type'],
-        Won_By = integer(row['Won_By']),
-        Match_Winner_Id = integer(row['Match_Winner_Id']),
-        Man_Of_The_Match_Id = integer(row['Man_Of_The_Match_Id']),
-        First_Umpire_Id = integer(row['First_Umpire_Id']),
-        Second_Umpire_Id = integer(row['Second_Umpire_Id']),
-        City_Name = row['City_Name'],
-        Host_Country = row['Host_Country'])
-
-        t.save()
-
-print (3)
-
-with open('/home/shubham/Desktop/ipl/Team.csv','r') as f:
-    reader = csv.DictReader(f)  #DictWriter
-    for row in reader:
-
-        t = Team (
-        Team_Id = integer (row['Team_Id']),
-        Team_Name = row['Team_Name'],
-        Team_Short_Code = row['Team_Short_Code'])
-
-        t.save()
-
-print (4)
-
-with open('/home/shubham/Desktop/ipl/Player_Match.csv','r') as f:
-    reader = csv.DictReader(f)  #DictWriter
-    for row in reader:
-
-        t = Player_Match.objects.get_or_create (
-        Match_Id = integer(row['Match_Id']),
-        Player_Id = integer(row['Player_Id']),
-        Team_Id = integer(row['Team_Id']),
-        Is_Keeper = integer(row['Is_Keeper']),
-        Is_Captain = integer(row['Is_Captain']))
+# with open('/home/shubham/Desktop/ipl/Season.csv','r') as f:
+#     reader = csv.DictReader(f)  #DictWriter
+#     for row in reader:
+#
+#         t = Season (
+#         Season_Id = integer(row['Season_Id']),
+#         Season_Year = integer(row['Season_Year']),
+#         Orange_Cap_Id = integer(row['Orange_Cap_Id']),
+#         Purple_Cap_Id = integer(row['Purple_Cap_Id']),
+#         Man_of_the_Series_Id = integer(row['Man_of_the_Series_Id']))
+#
+#         t.save()
+#
+# print (1)
+#
+# with open('/home/shubham/Desktop/ipl/Player.csv','r') as f:
+#     reader = csv.DictReader(f)  #DictWriter
+#     for row in reader:
+#
+#         t = Player.objects.get_or_create (
+#         Player_Id = integer (row['Player_Id']),
+#         Player_Name = row['Player_Name'],
+#         DOB = date(row['DOB']),
+#         Batting_Hand = row['Batting_Hand'],
+#         Bowling_Skill = row['Bowling_Skill'],
+#         Country = row['Country'],
+#         Is_Umpire = integer (row['Is_Umpire']))
+#         #
+#         # t.save()
+# print (2)
+#
+# with open('/home/shubham/Desktop/ipl/Match.csv','r') as f:
+#     reader = csv.DictReader(f)  #DictWriter
+#     for row in reader:
+#
+#         t = Match (
+#         Match_Id = integer(row['Match_Id']),
+#         Match_Date = date(row['Match_Date']),
+#         Team_Name_Id = integer(row['Team_Name_Id']),
+#         Opponent_Team_Id = integer(row['Opponent_Team_Id']),
+#         Season_Id = integer(row['Season_Id']),
+#         Venue_Name = row['Venue_Name'],
+#         Toss_Winner_Id = integer(row['Toss_Winner_Id']),
+#         Toss_Decision = row['Toss_Decision'],
+#         IS_Superover = integer(row['IS_Superover']),
+#         IS_Result = integer(row['IS_Result']),
+#         Is_DuckWorthLewis = integer(row['Is_DuckWorthLewis']),
+#         Win_Type = row['Win_Type'],
+#         Won_By = integer(row['Won_By']),
+#         Match_Winner_Id = integer(row['Match_Winner_Id']),
+#         Man_Of_The_Match_Id = integer(row['Man_Of_The_Match_Id']),
+#         First_Umpire_Id = integer(row['First_Umpire_Id']),
+#         Second_Umpire_Id = integer(row['Second_Umpire_Id']),
+#         City_Name = row['City_Name'],
+#         Host_Country = row['Host_Country'])
+#
+#         t.save()
+#
+# print (3)
+#
+# with open('/home/shubham/Desktop/ipl/Team.csv','r') as f:
+#     reader = csv.DictReader(f)  #DictWriter
+#     for row in reader:
+#
+#         t = Team (
+#         Team_Id = integer (row['Team_Id']),
+#         Team_Name = row['Team_Name'],
+#         Team_Short_Code = row['Team_Short_Code'])
+#
+#         t.save()
+#
+# print (4)
+#
+# with open('/home/shubham/Desktop/ipl/Player_Match.csv','r') as f:
+#     reader = csv.DictReader(f)  #DictWriter
+#     for row in reader:
+#
+#         t = Player_Match.objects.get_or_create (
+#         Match_Id = integer(row['Match_Id']),
+#         Player_Id = integer(row['Player_Id']),
+#         Team_Id = integer(row['Team_Id']),
+#         Is_Keeper = integer(row['Is_Keeper']),
+#         Is_Captain = integer(row['Is_Captain']))
 
         #t.save()
 #
@@ -133,6 +133,21 @@ with open('/home/shubham/Desktop/ipl/Player_Match.csv','r') as f:
 #         if count%30 == 0 :
 #             print (count, end = " ")
         #t.save()
+
+with open('/home/shubham/Desktop/djangoProjects/testProject/playerUrl.csv','r') as f:
+    reader = csv.DictReader(f)  #DictWriter
+    for row in reader:
+
+        q = Player.objects.get(Player_Id = row['Player_Id'])
+        q.url = (row['url'])
+        q.save()
+#         t = Season (
+#         Season_Id = integer(row['Season_Id']),
+#         Season_Year = integer(row['Season_Year']),
+#         Orange_Cap_Id = integer(row['Orange_Cap_Id']),
+#         Purple_Cap_Id = integer(row['Purple_Cap_Id']),
+#         Man_of_the_Series_Id = integer(row['Man_of_the_Series_Id']))
+
 print ('Success!!')
 # t = Person(person_id = 1, person_name = 'naman')#, dob = datetime.strptime('Jun 1 2005', '%b %d %Y'))
 # t.save()

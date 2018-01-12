@@ -102,8 +102,7 @@ class playerView (View) :
         player[0]['age_years'] = relativedelta(date.today(),player[0]['DOB']).years
         player[0]['age_months'] = relativedelta(date.today(),player[0]['DOB']).months
         player[0]['age_days'] = relativedelta(date.today(),player[0]['DOB']).days
-        item = get_image_link(player[0]['Player_Name'])
-        player[0]['image_link'] = item[0]
+        player[0]['image_link'] = player[0]['url']
 
         context = {'player' : player}
         return render(request, "firstApp/player.html", context)

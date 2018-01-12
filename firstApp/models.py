@@ -20,6 +20,7 @@ class Player(models.Model):
     Bowling_Skill   = models.CharField(max_length = 100)
     Country         = models.CharField(max_length = 100)
     Is_Umpire       = models.IntegerField()
+    url             = models.URLField(blank=True)
 
     def __str__(self) :
         return str(self.Player_Id) +' - '+self.Player_Name
