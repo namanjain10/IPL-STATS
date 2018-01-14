@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^mom/', views.manOfTheMatchView.as_view()),
     url(r'^captain/', views.captainView.as_view()),
     url(r'^api/', views.playerViewApi.as_view()),
-    url(r'^test/', views.apiView)
+    url(r'^test/', views.testApiView)
 ]
 
 # urlpatterns = format_suffix_patterns(urlpatterns)

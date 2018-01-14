@@ -43,9 +43,10 @@ $(window).ready( function () {
             "match_id": 419125
         },
         cache: false,
-        type: "POST",
+        type: "GET",
         success: function(response){
         response = $.parseJSON(response);
+
         div = $('<div></div>').attr({class : "container"});
         mytable = $('<table></table>').attr({class : "table table-striped table-bordered table-hover" ,id: "basicTable" });
         tr = $('<thead></thead>').append($('<tr>').append(
@@ -55,6 +56,7 @@ $(window).ready( function () {
             $('<td>').text('strike rate')
         ));
         tr.appendTo(mytable);
+        var bd = $('<tbody></tbody>')
         $.each(response, function(i, item) {
             h = '/player/' + item.Striker_Id + '/'
             var tr = $('<tr>').append(
@@ -63,17 +65,21 @@ $(window).ready( function () {
                 $('<td>').text(item.balls).attr({class : 'balls'}),
                 $('<td>').text(item.str)
             );
-            tr.appendTo(mytable);
+            tr.appendTo(bd);
             });
+        bd.appendTo(mytable);
         mytable.appendTo(div);
         div.appendTo("#player");
+    },
+    error: function(err){
+        console.log(err);
     }});
 });
 
 
 
 $(document).ajaxComplete(function () {
-    console.log('heel');
+
     var TotalRuns = 0;
     var TotalBalls = 0;
     //alert('hey');

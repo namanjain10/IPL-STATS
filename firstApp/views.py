@@ -26,7 +26,7 @@ def dictfetchall(cursor):
 class playerViewApi(APIView) :
 
     def get(self, request) :
-        print(request.data)
+
         cursor = connection.cursor()
         cursor.execute('''
         SELECT striker_id, player_name, sum(batsman_scored) as runs, count (*) as balls ,(cast(sum(batsman_scored) as float) / count (*) * 100) as str
@@ -35,7 +35,7 @@ class playerViewApi(APIView) :
         select * from firstApp_ball_by_ball
         where match_id = %d and innings_id = 1 and (extra_type = 'wides' or extra_type = 'noballs')) as d join firstApp_player on player_id = striker_id
         group by striker_id, player_name
-        ''' %(int(match), int(match)))
+        ''' %(int(request.GET['match_id']), int(request.GET['match_id'])))
 
         # cursor.execute(''' SELECT player_in, player_name, batting_hand
         # from firstApp_player
@@ -316,7 +316,7 @@ class scheduleView (View) :
         context = {'match_details' : match_details}
         return render(request, "firstApp/schedule.html", context)
 
-def apiView(request) :
+def testApiView(request) :
     return render(request, 'firstApp/api.html')
 
 class test (View) :

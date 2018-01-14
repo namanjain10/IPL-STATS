@@ -1,13 +1,10 @@
 {% extends "firstApp/index.html" %}
 {% block content %}
 
- <div  style="float : right; padding : 20px 50px 10px 20px">
-    {% for p in player %}
-        <img src ="{{p.image_link}}" style = "float : right" width="220px" height="200px" class="img-rounded">
-    {%endfor%}
-</div>
 
-<div style = "size = 100%">
+
+
+<div style = "float : left; width : 70%">
     {% for p in player %}
     <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3>
     <h5>Name : {{p.Player_Name}}</h5>
@@ -24,5 +21,12 @@
         {%endfor%}
     </div>
 </div>
+
+<div  style="float : left; padding : 20px 50px 10px 20px">
+    {% for p in player %}
+    <img src ="{{p.image_link}}" style = "float : right" width="220px" height="200px" class="img-rounded">
+    {%endfor%}
+</div>
+<div style = "clear: both"></div>
 
 {% endblock content %}
