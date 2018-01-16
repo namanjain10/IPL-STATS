@@ -2,19 +2,22 @@
 {% block content %}
 
 <h1>Most Man Of The Matches</h1>
-<table class = "table table-striped table-bordered table-hover">
-    <thead>
-        <td><strong>Player Name</strong></td>
-        <td><strong>Count</strong></td>
-    </thead>
-    <tbody>
-        {%for p in man %}
-        <tr>
-            <td><a href="/player/{{p.Man_Of_The_Match_Id}}">{{p.Player_Name}}</a></td>
-            <td>{{p.count}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+
+    <table class = "table table-striped table-bordered table-hover">
+        <thead>
+            <td><strong>Player Name</strong></td>
+            <td><strong>Count</strong></td>
+        </thead>
+        <tbody>
+            {%for p in man %}
+            <tr>
+                <td><a href="/player/{{p.Man_Of_The_Match_Id}}">{{p.Player_Name}}</a></td>
+                <td>{{p.count}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock content %}

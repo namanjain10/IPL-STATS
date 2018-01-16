@@ -41,15 +41,6 @@ def index (request):
 
     pl = dictfetchall(cursor)
 
-    cursor.execute ('''
-    SELECT firstApp_match.match_id, match_date
-    from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
-    where innings_id = 3 or innings_id = 4
-    group by firstApp_match.match_id, match_date
-    ''')
-
-    superover = dictfetchall(cursor)
-
     cursor.execute ('''SELECT player_dissimal_id, player_name, count(*) as count
     from firstApp_ball_by_ball join firstApp_player on player_id = player_dissimal_id
 
@@ -62,7 +53,7 @@ def index (request):
 
     k = dictfetchall(cursor)
 
-    my_dict = {'pi' : pl,'SuperOver' : superover,'outs' : outs , 'k' : k}
+    my_dict = {'pi' : pl,'outs' : outs , 'k' : k}
     return render(request,'firstApp/index.html',context = my_dict)
 def testApiView(request) :
     return render(request, 'firstApp/api.html')
@@ -72,6 +63,21 @@ def eval_player () :
 class SeasonHome (View) :
     def get(self, request) :
         return render (request, 'firstApp/season_home.html')
+
+
+class SuperoverView (View) :
+
+    def get (self, request) :
+        cursor = connection.cursor()
+        cursor.execute ('''
+        SELECT firstApp_match.match_id, match_date
+        from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
+        where innings_id = 3 or innings_id = 4
+        group by firstApp_match.match_id, match_date
+        ''')
+
+        superover = dictfetchall(cursor)
+        return render (request, 'firstApp/superover.html', {'superover':superover} )
 
 class playerViewApi(APIView) :
 

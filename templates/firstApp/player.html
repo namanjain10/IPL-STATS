@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div style = "float : left; width : 70%">
+<div id = "player_details">
     {% for p in player %}
     <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3>
     <h5><strong>Name</strong> : {{p.Player_Name}}</h5>
@@ -21,9 +21,9 @@
     </div>
 </div>
 
-<div  style="float : left; padding : 20px 50px 10px 20px">
+<div id = "player_img">
     {% for p in player %}
-    <img src ="{{p.image_link}}" style = "float : right" width="220px" height="200px" class="img-rounded">
+    <img src ="{{p.image_link}}" width="220px" height="200px" class="img-rounded">
     {%endfor%}
 </div>
 <div style = "clear: both"></div>

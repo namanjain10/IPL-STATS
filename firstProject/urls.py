@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^runs-match/(?P<id>\d+)/$', views.runsMatchView.as_view()),
     url(r'^match/(?P<id>\d+)/$', views.matchView.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(r'^superover/', views.SuperoverView.as_view()),
     url(r'^help/', views.test.as_view()),
     url(r'^player-name-api/',views.PlayerSearchApi.as_view()),
     url(r'^player-home/', views.PlayerHome.as_view()),

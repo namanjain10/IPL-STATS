@@ -30,6 +30,30 @@ h3 {
     color: rgb(153, 163, 145) ;
 }
 
+#player_details {
+    float : left;
+    width : 70%;
+}
+
+.carousel {
+  width:100% ;
+}
+
+.carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+    min-width: 100%;
+    max-width: none;
+    height: 450px;
+}
+
+.table-responsive {
+    padding-top: 18px;
+}
+
+#player_img {
+    float : left;
+    padding : 20px 50px 10px 20px;
+}
+
 #dropdownMenu1 {
     height: auto;
     max-height: 375px;
