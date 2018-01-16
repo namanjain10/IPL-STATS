@@ -45,6 +45,11 @@ h3 {
     height: 450px;
 }
 
+.carousel-caption {
+    font-size: 25px;
+    color: rgb(234, 242, 71);
+}
+
 .table-responsive {
     padding-top: 18px;
 }
