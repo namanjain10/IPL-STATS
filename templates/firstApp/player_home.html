@@ -1,0 +1,30 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+
+<div class="container" id = "text">
+    <p>Search the <strong>name</strong> or <strong>surname</strong> of the player in the search bar below</p>
+</div>
+
+<div class="container" id = "search_bar">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <label >Find Player Here</label>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <input class="form-control" type="search" id="search" name="player" onkeyup="player(event)" placeholder="Search Player Here..."/>
+
+            <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+
+            <div class="row col-md-12">
+                <div class="dropdown" id="search_box" >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

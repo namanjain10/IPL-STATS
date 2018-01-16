@@ -22,7 +22,13 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+def myconverter(o):
+    if isinstance(o, date):
+        return o.__str__()
 
+class SeasonHome (View) :
+    def get(self, request) :
+        return render (request, 'firstApp/season_home.html')
 class playerViewApi(APIView) :
 
     def get(self, request) :
@@ -319,10 +325,26 @@ class scheduleView (View) :
 def testApiView(request) :
     return render(request, 'firstApp/api.html')
 
+class PlayerSearchApi (APIView) :
+    def get (self,request) :
+        # cursor = connection.cursor()
+        # cursor.execute("SELECT * from testApp_player where Player_Name like '%%%s%%'"%(request.GET['name']))
+        # dic = dictfetchall(cursor)
+
+        query = Player.objects.filter(Player_Name__contains=request.GET['name']).values()
+        dic = [i for i in query]
+
+        res = json.dumps(dic, default=myconverter)
+        #print (res)
+        return Response(res)
+
+class PlayerHome (View) :
+    def get (self, request, *args, **kwargs) :
+        return render(request, "firstApp/player_home.html")
+
 class test (View) :
 
     def get (self, request, *args, **kwargs) :
-
         cursor = connection.cursor()
         # cursor.execute(test_str %2)
         q = Match.objects.raw('''SELECT * from firstApp_match''')
