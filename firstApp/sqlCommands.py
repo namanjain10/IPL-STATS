@@ -50,3 +50,47 @@ match_bowl_str = '''SELECT h.innings_id, h.bowler_id, player_name, overs, balls,
                 where match_id = %d and (dissimal_type = 'run out' or dissimal_type = 'runout')) as foo
                 where dissimal_type != ''
                 group by bowler_id, innings_id ) as r on (r.bowler_id = h.bowler_id and r.innings_id = h.innings_id) '''
+
+
+
+player_season = '''SELECT season_id, count(*) as Innings, sum(runs) as Runs, sum(balls)as Balls, sum(fours) as Fours, sum(sixes) as Sixes, round(cast(sum(runs) as float)/sum(balls) * 100, 2) as strike, count(outs) as Outs
+    from (select four.match_id, season_id, runs, balls, outs, fours,sixes, str
+    from (select foo.match_id, season_id, runs, balls, outs, fours, str
+    from (select naman.season_id, naman.match_id, runs, balls, outs, str
+    from (select season_id, firstApp_match.match_id, (sum(batsman_scored)) as runs, count(*) as balls, cast(sum(batsman_scored) as float)/count(*) * 100 as str
+    from (select * from firstApp_ball_by_ball
+            except
+    select * from firstApp_ball_by_ball
+    where extra_type = 'wides') as firstApp_ball_by_ball join firstApp_match on firstApp_ball_by_ball.match_id = firstApp_match.match_id
+    where striker_id = %d
+    group by season_id, firstApp_match.match_id
+    order by season_id desc) as naman left join (select season_id, firstApp_match.match_id, count(*) as outs
+    from firstApp_ball_by_ball join firstApp_match on firstApp_ball_by_ball.match_id = firstApp_match.match_id
+    where striker_id = %d and player_dissimal_id = %d
+    group by season_id, firstApp_match.match_id
+    order by season_id desc) as jain on naman.match_id = jain.match_id) as foo left join
+    (select match_id, count(*) as fours
+    from firstApp_ball_by_ball
+    where striker_id = %d and batsman_scored = 4
+    group by match_id) as ood on foo.match_id = ood.match_id) as four left join (select match_id, count(*) as sixes
+    from firstApp_ball_by_ball
+    where striker_id = %d and batsman_scored = 6
+    group by match_id) as sixes on four.match_id = sixes.match_id)as total
+    group by season_id'''
+
+fifty_season = '''SELECT firstApp_season.season_id, hundreds
+    from firstApp_season left join (select season_id, count(*) as hundreds
+    from (select match_id, sum(batsman_scored) as runs
+    from firstApp_ball_by_ball
+    where striker_id = %d
+    group by match_id
+    having sum(batsman_scored) between %d and %d)as foo join firstApp_match on foo.match_id = firstApp_match.match_id
+    group by season_id) as food on food.season_id = firstApp_season.season_id'''
+
+highest_season = '''SELECT firstApp_season.season_id, highest
+    from firstApp_season left join (select season_id, max(runs) as highest
+    from (select match_id, sum(batsman_scored) as runs
+    from firstApp_ball_by_ball
+    where striker_id = %d
+    group by match_id)as foo join firstApp_match on foo.match_id = firstApp_match.match_id
+    group by season_id) as food on food.season_id = firstApp_season.season_id'''

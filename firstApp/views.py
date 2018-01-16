@@ -26,35 +26,6 @@ def myconverter(o):
     if isinstance(o, date):
         return o.__str__()
 
-class SeasonHome (View) :
-    def get(self, request) :
-        return render (request, 'firstApp/season_home.html')
-class playerViewApi(APIView) :
-
-    def get(self, request) :
-
-        cursor = connection.cursor()
-        cursor.execute('''
-        SELECT striker_id, player_name, sum(batsman_scored) as runs, count (*) as balls ,(cast(sum(batsman_scored) as float) / count (*) * 100) as str
-        from (select * from firstApp_ball_by_ball where match_id = %d and innings_id = 1
-        except
-        select * from firstApp_ball_by_ball
-        where match_id = %d and innings_id = 1 and (extra_type = 'wides' or extra_type = 'noballs')) as d join firstApp_player on player_id = striker_id
-        group by striker_id, player_name
-        ''' %(int(request.GET['match_id']), int(request.GET['match_id'])))
-
-        # cursor.execute(''' SELECT player_in, player_name, batting_hand
-        # from firstApp_player
-        # ''')
-
-        pl = dictfetchall(cursor)
-        return HttpResponse(json.dumps(pl))
-        # serializer = PlayerSerializer(pl, many = True)
-        # return Response(serializer.data)
-
-    def post(self, request) :
-        pass
-
 def index (request):
     team = Player.objects.all()
     cursor = connection.cursor()
@@ -93,10 +64,40 @@ def index (request):
 
     my_dict = {'pi' : pl,'SuperOver' : superover,'outs' : outs , 'k' : k}
     return render(request,'firstApp/index.html',context = my_dict)
+def testApiView(request) :
+    return render(request, 'firstApp/api.html')
 
-def help (request) :
-    #my_dict = {'index':'OK lets do this!!'}
-    return HttpResponse("Help")
+def eval_player () :
+    ''''''
+class SeasonHome (View) :
+    def get(self, request) :
+        return render (request, 'firstApp/season_home.html')
+
+class playerViewApi(APIView) :
+
+    def get(self, request) :
+
+        cursor = connection.cursor()
+        cursor.execute('''
+        SELECT striker_id, player_name, sum(batsman_scored) as runs, count (*) as balls ,(cast(sum(batsman_scored) as float) / count (*) * 100) as str
+        from (select * from firstApp_ball_by_ball where match_id = %d and innings_id = 1
+        except
+        select * from firstApp_ball_by_ball
+        where match_id = %d and innings_id = 1 and (extra_type = 'wides' or extra_type = 'noballs')) as d join firstApp_player on player_id = striker_id
+        group by striker_id, player_name
+        ''' %(int(request.GET['match_id']), int(request.GET['match_id'])))
+
+        # cursor.execute(''' SELECT player_in, player_name, batting_hand
+        # from firstApp_player
+        # ''')
+
+        pl = dictfetchall(cursor)
+        return HttpResponse(json.dumps(pl))
+        # serializer = PlayerSerializer(pl, many = True)
+        # return Response(serializer.data)
+
+    def post(self, request) :
+        pass
 
 class playerView (View) :
     def get (self, request, *args, **kwargs) :
@@ -110,7 +111,46 @@ class playerView (View) :
         player[0]['age_days'] = relativedelta(date.today(),player[0]['DOB']).days
         player[0]['image_link'] = player[0]['url']
 
-        context = {'player' : player}
+
+        cursor.execute(player_season%(int(player_id), int(player_id), int(player_id), int(player_id), int(player_id)))
+
+        score = dictfetchall(cursor)
+
+        cursor.execute(fifty_season%(int(player_id), 50, 100))
+        fifty = dictfetchall(cursor)
+
+        cursor.execute(fifty_season%(int(player_id), 100, 200))
+        hundred = dictfetchall(cursor)
+
+        cursor.execute(highest_season%(int(player_id)))
+        highest = dictfetchall(cursor)
+
+        for i in range (len(score)) :
+            for j in range (len(fifty)) :
+                if score[i]['season_id'] == fifty[j]['Season_Id'] :
+                    if fifty[j]['hundreds'] == None :
+                        fifty[j]['hundreds'] = 0
+
+                    score[i]['fifty'] = fifty[j]['hundreds']
+                    break
+
+            for j in range (len(hundred)) :
+                if score[i]['season_id'] == hundred[j]['Season_Id'] :
+                    if hundred[j]['hundreds'] == None :
+                        hundred[j]['hundreds'] = 0
+
+                    score[i]['hundred'] = hundred[j]['hundreds']
+                    break
+
+            for j in range (len(highest)) :
+                if score[i]['season_id'] == highest[j]['Season_Id'] :
+                    if highest[j]['highest'] == None :
+                        highest[j]['highest'] = 0
+
+                    score[i]['highest'] = highest[j]['highest']
+                    break
+
+        context = {'player' : player, 'score' : score}
         return render(request, "firstApp/player.html", context)
 
 class matchView (View) :
@@ -321,9 +361,6 @@ class scheduleView (View) :
 
         context = {'match_details' : match_details}
         return render(request, "firstApp/schedule.html", context)
-
-def testApiView(request) :
-    return render(request, 'firstApp/api.html')
 
 class PlayerSearchApi (APIView) :
     def get (self,request) :

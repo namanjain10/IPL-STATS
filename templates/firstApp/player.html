@@ -1,14 +1,16 @@
 {% extends "firstApp/index.html" %}
+{% load app_tags %}
+
 {% block content %}
 
 <div style = "float : left; width : 70%">
     {% for p in player %}
     <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3>
-    <h5>Name : {{p.Player_Name}}</h5>
-    <h5>DOB : {{p.DOB}}</h5>
-    <h5>Age : {{p.age_years}} years {{p.age_months}} months {{p.age_days}} days</h5>
-    <h5>Batting Hand : {{p.Batting_Hand}}</h5>
-    <h5>Bowling Skill : {{p.Bowling_Skill}}</h5>
+    <h5><strong>Name</strong> : {{p.Player_Name}}</h5>
+    <h5><strong>DOB</strong> : {{p.DOB}}</h5>
+    <h5><strong>Age</strong> : {{p.age_years}} years {{p.age_months}} months {{p.age_days}} days</h5>
+    <h5><strong>Batting Hand</strong> : {{p.Batting_Hand}}</h5>
+    <h5><strong>Bowling Skill</strong> : {{p.Bowling_Skill}}</h5>
 
     {%endfor%}
 
@@ -26,4 +28,43 @@
 </div>
 <div style = "clear: both"></div>
 
+<div class="table-responsive">
+    <table class = "table table-striped table-bordered table-hover">
+        <thead>
+            <td><strong>Season Year</strong></td>
+            <td><strong>Innings</strong></td>
+            <td><strong>Not outs</strong></td>
+            <td><strong>Runs</strong></td>
+            <td><strong>High Score</strong></td>
+            <td><strong>Average</strong></td>
+            <td><strong>Balls Faced</strong></td>
+            <td><strong>Strike Rate</strong></td>
+            <td><strong>Hundreds</strong></td>
+            <td><strong>Fifties</strong></td>
+            <td><strong>Fours</strong></td>
+            <td><strong>Sixes</strong></td>
+
+        </thead>
+        <tbody>
+            {%for p in score %}
+            <tr>
+                <td>{{ p.season_id|add:"2007"}}</td>
+                <td>{{p.Innings}}</td>
+                <td>{% sub p.Innings p.Outs %}</td>
+                <td>{{p.Runs}}</td>
+                <td>{{p.highest}}</td>
+                <td>{%div p.Runs p.Outs%}</td>
+                <td>{{p.Balls}}</td>
+                <td>{{p.strike}}</td>
+                <td>{{p.hundred}}</td>
+                <td>{{p.fifty}}</td>
+                <td>{{p.Fours}}</td>
+                <td>{{p.Sixes}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
 {% endblock content %}
