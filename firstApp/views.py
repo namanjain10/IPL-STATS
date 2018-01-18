@@ -336,6 +336,9 @@ class seasonView (View) :
     def get (self, request, *args, **kwargs) :
 
         season_id = kwargs['id']
+        name = Season.objects.filter(Season_Id = int(season_id)).get()
+        year = name.Season_Year
+
         cursor = connection.cursor()
 
         cursor.execute(''' SELECT match_id, match_date, team_name_id, opponent_team_id, venue_name, city_name, host_country from firstApp_match where season_id = %d order by match_date''' %int(season_id))
@@ -373,8 +376,8 @@ class seasonView (View) :
         cursor.execute(four_innings_season%(6,int(season_id)))
         six_innings = dictfetchall(cursor)
 
-        context = {'match_details' : match_details, 'runs' : runs, 'four' : four, 'six' : six, 'highest' : highest, 'strike' : strike, 'fifty' : fifty, 'hundred' : hundred, 'four_innings' : four_innings, 'six_innings' : six_innings}
-        
+        context = {'year' : year,'match_details' : match_details, 'runs' : runs, 'four' : four, 'six' : six, 'highest' : highest, 'strike' : strike, 'fifty' : fifty, 'hundred' : hundred, 'four_innings' : four_innings, 'six_innings' : six_innings}
+
         return render(request, "firstApp/season.html", context)
 
 class PlayerSearchApi (APIView) :
