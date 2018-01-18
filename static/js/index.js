@@ -232,4 +232,11 @@ $('#player_table tbody').append(
     ),
 );
 
-console.log(playerInnings, playerHighest);
+$('.showSingle').click(function(){
+      $('.season_table').hide();
+      $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+      $('.season_table').removeClass('active');
+      $('#div'+$(this).attr('target')).show();
+      $(this).addClass( 'active' );
+      
+});
