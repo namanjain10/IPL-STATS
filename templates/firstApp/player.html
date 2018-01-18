@@ -48,7 +48,7 @@
         <tbody>
             {%for p in score %}
             <tr>
-                <td>{{ p.season_id|add:"2007"}}</td>
+                <td>{{p.season_id|add:"2007"}}</td>
                 <td class = "player_innings">{{p.Innings}}</td>
                 <td class = "player_notout">{% sub p.Innings p.Outs %}</td>
                 <td class = "player_runs">{{p.Runs}}</td>

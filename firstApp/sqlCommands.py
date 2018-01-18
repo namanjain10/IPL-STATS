@@ -107,3 +107,35 @@ nr = '''SELECT firstApp_season.season_id, nr
     from firstApp_match
     where (team_name_id = {0} or opponent_team_id = {0}) and is_result = 0
     group by season_id) as foo on firstApp_season.season_id = foo.season_id'''
+
+
+runs_per_match_player = '''SELECT  w.match_id as match_id, match_date, venue_name, city_name, bowler_id, dissimal_type, fielder_id, sum1, balls, round((cast(sum1 as float) / balls * 100),2) as str
+
+    from (select u.match_id, match_date, venue_name, city_name, dissimal_type, bowler_id, fielder_id, sum1
+    from
+    (select firstApp_match.match_id, sum(batsman_scored) as sum1, match_date, city_name, venue_name
+                    from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
+                    where striker_id = %d and (innings_id = 1 or innings_id = 2)
+                    group by firstApp_match.match_id, match_date, venue_name, city_name) as u left join
+
+    (select d.match_id, dissimal_type, bowler_id, fielder_id
+     from firstApp_ball_by_ball
+    join (
+    select firstApp_match.match_id, sum(batsman_scored) as sum1
+    from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
+    where striker_id = %d and (innings_id = 1 or innings_id = 2)
+    group by firstApp_match.match_id) as d on (firstApp_ball_by_ball.match_id = d.match_id and player_dissimal_id = %d)
+    group by d.match_id, dissimal_type, fielder_id, bowler_id
+    order by d.match_id) as f
+         on u.match_id = f.match_id
+                    order by u.match_id) as w
+                        join (select match_id , count(*) as balls
+                                from (select *
+                                    from firstApp_ball_by_ball
+                                    where striker_id = %d
+                                    except
+                                    select *
+                                    from firstApp_ball_by_ball
+                                    where extra_type = 'wides' or extra_type = 'noballs') as foo
+                                    group by match_id) as h on w.match_id = h.match_id
+                                    order by w.match_id '''

@@ -158,6 +158,13 @@ class playerView (View) :
                     score[i]['highest'] = highest[j]['highest']
                     break
 
+        for i in range (len(score)) :
+            if score[i]['Fours'] == None :
+                score[i]['Fours'] = 0
+
+            if score[i]['Sixes'] == None :
+                score[i]['Sixes'] = 0
+
         context = {'player' : player, 'score' : score}
         return render(request, "firstApp/player.html", context)
 
@@ -232,42 +239,14 @@ class matchView (View) :
 class runsMatchView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
+
+        name = Player.objects.filter(Player_Id = int(player_id)).get()
+        name = name.Player_Name
         cursor = connection.cursor()
 
-        cursor.execute('''SELECT  w.match_id as match_id, match_date, venue_name, city_name, bowler_id, dissimal_type, fielder_id, sum1, balls, round((cast(sum1 as float) / balls * 100),2) as str
-
-        from (select u.match_id, match_date, venue_name, city_name, dissimal_type, bowler_id, fielder_id, sum1
-        from
-      (select firstApp_match.match_id, sum(batsman_scored) as sum1, match_date, city_name, venue_name
-							from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
-							where striker_id = %d and (innings_id = 1 or innings_id = 2)
-							group by firstApp_match.match_id, match_date, venue_name, city_name) as u left join
-
-      (select d.match_id, dissimal_type, bowler_id, fielder_id
-	from firstApp_ball_by_ball
-    	join (
-            select firstApp_match.match_id, sum(batsman_scored) as sum1
-			from firstApp_ball_by_ball join firstApp_match on firstApp_match.match_id = firstApp_ball_by_ball.match_id
-			where striker_id = %d and (innings_id = 1 or innings_id = 2)
-            group by firstApp_match.match_id) as d on (firstApp_ball_by_ball.match_id = d.match_id and player_dissimal_id = %d)
-		group by d.match_id, dissimal_type, fielder_id, bowler_id
-		order by d.match_id) as f
-               	 on u.match_id = f.match_id
-							order by u.match_id) as w
-                            	join (select match_id , count(*) as balls
-										from (select *
-                                            from firstApp_ball_by_ball
-                                            where striker_id = %d
-                                            except
-                                            select *
-                                            from firstApp_ball_by_ball
-                                            where extra_type = 'wides' or extra_type = 'noballs') as foo
-                                            group by match_id) as h on w.match_id = h.match_id
-                                            order by w.match_id; ''' %(int(player_id),int(player_id),int(player_id),int(player_id)))
+        cursor.execute(runs_per_match_player %(int(player_id),int(player_id),int(player_id),int(player_id)))
 
         runs = dictfetchall(cursor)
-        print (runs[2]['fielder_id'])
-        print (len(runs))
 
         for j in range (len(runs)) :
 
@@ -276,7 +255,7 @@ class runsMatchView (View) :
                 if runs[j][i] :
                     runs[j][i] = Player.objects.filter(Player_Id = runs[j][i]).values('Player_Name')[0]['Player_Name']
 
-        context = {'runs' : runs}
+        context = {'name' : name, 'runs' : runs}
         return render(request, "firstApp/runs_per_match.html", context)
 
 class manOfTheMatchView (View) :
@@ -398,6 +377,8 @@ class TeamView (View) :
     def get (self, request, *args, **kwargs) :
         team_id = kwargs['id']
         name = Team.objects.filter(Team_Id = int(team_id)).get()
+        name = name.Team_Name
+
         cursor = connection.cursor()
 
         cursor.execute(wins.format(int(team_id)))
@@ -447,7 +428,7 @@ class TeamView (View) :
                 i = i-1
             i += 1
         dic = loss
-        return render (request, 'firstApp/team.html', {'name': name.Team_Name,'team' : dic})
+        return render (request, 'firstApp/team.html', {'name': name,'team' : dic})
 
 class test (View) :
 

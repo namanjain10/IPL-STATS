@@ -8,4 +8,7 @@ def sub(arg1, arg2):
 
 @register.assignment_tag
 def div(arg1, arg2):
-    return round(arg1 / arg2,2)
+    try :
+        return round(arg1 / arg2,2)
+    except :
+        return '-'    
