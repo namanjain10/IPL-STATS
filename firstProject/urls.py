@@ -21,7 +21,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 urlpatterns = [
     url(r'^$', include('firstApp.urls')),
     url(r'^player/(?P<id>\d+)/$', views.playerView.as_view()),
-    url(r'^season/(?P<id>\d+)/$', views.scheduleView.as_view()),
+    url(r'^season/(?P<id>\d+)/$', views.seasonView.as_view()),
     url(r'^runs-match/(?P<id>\d+)/$', views.runsMatchView.as_view()),
     url(r'^match/(?P<id>\d+)/$', views.matchView.as_view()),
     url(r'^admin/', admin.site.urls),

@@ -332,7 +332,7 @@ class captainView (View) :
 
         return render(request,'firstApp/captain.html',context)
 
-class scheduleView (View) :
+class seasonView (View) :
     def get (self, request, *args, **kwargs) :
 
         season_id = kwargs['id']
@@ -346,8 +346,36 @@ class scheduleView (View) :
             for i in ('Team_Name_Id','Opponent_Team_Id') :
                 match_details[j][i] = (Team.objects.filter(Team_Id = match_details[j][i]).values('Team_Name')[0]['Team_Name'])
 
-        context = {'match_details' : match_details}
-        return render(request, "firstApp/schedule.html", context)
+        cursor.execute(most_runs_season%int(season_id))
+        runs = dictfetchall(cursor)
+
+        cursor.execute(most_six_season%(4, int(season_id)))
+        four = dictfetchall(cursor)
+
+        cursor.execute(most_six_season%(6, int(season_id)))
+        six = dictfetchall(cursor)
+
+        cursor.execute(higest_season%int(season_id))
+        highest = dictfetchall(cursor)
+
+        cursor.execute(strike_rate_season%(int(season_id), int(season_id)))
+        strike = dictfetchall(cursor)
+
+        cursor.execute(fifty_season%(int(season_id),50,100))
+        fifty = dictfetchall(cursor)
+
+        cursor.execute(fifty_season%(int(season_id),100,200))
+        hundred = dictfetchall(cursor)
+
+        cursor.execute(four_innings_season%(4,int(season_id)))
+        four_innings = dictfetchall(cursor)
+
+        cursor.execute(four_innings_season%(6,int(season_id)))
+        six_innings = dictfetchall(cursor)
+
+        context = {'match_details' : match_details, 'runs' : runs, 'four' : four, 'six' : six, 'highest' : highest, 'strike' : strike, 'fifty' : fifty, 'hundred' : hundred, 'four_innings' : four_innings, 'six_innings' : six_innings}
+        
+        return render(request, "firstApp/season.html", context)
 
 class PlayerSearchApi (APIView) :
     def get (self,request) :
