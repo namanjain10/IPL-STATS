@@ -1,0 +1,30 @@
+
+{% extends "firstApp/index.html" %}
+{% block content %}
+<div class="container">
+    <h1>{{name}}</h1>
+    <div class="table-responsive">
+        <table class = "table table-striped table-bordered table-hover" id = "team_table">
+            <thead>
+                <td><strong>Season Year</strong></td>
+                <td><strong>Total</strong></td>
+                <td><strong>Wins</strong></td>
+                <td><strong>Losses</strong></td>
+                <td><strong>No Result</strong></td>
+            </thead>
+            <tbody>
+                {%for p in team %}
+                <tr>
+                    <td><a href="/season/{{p.Season_Id}}">{{p.Season_Id | add:"2007"}}</a></td>
+                    <td class = "team_total">{{p.total}}</td>
+                    <td class = "team_wins">{{p.wins}}</td>
+                    <td class = "team_losses">{{p.losses}}</td>
+                    <td class = "team_nr">{{p.nr}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock content %}

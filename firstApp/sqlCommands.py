@@ -1,9 +1,6 @@
 test_str = ''' SELECT match_id, match_date, team_name_id, opponent_team_id, venue_name, city_name, host_country
                 from firstApp_match where season_id = %d order by match_date'''
 
-
-
-
 match_bowl_str = '''SELECT h.innings_id, h.bowler_id, player_name, overs, balls, runs, econ, wickets
                 from (select q.innings_id, q.bowler_id, player_name, overs, balls, runs, round(cast(runs as float)/(overs*6 + balls)*6,2) as econ
 
@@ -51,8 +48,6 @@ match_bowl_str = '''SELECT h.innings_id, h.bowler_id, player_name, overs, balls,
                 where dissimal_type != ''
                 group by bowler_id, innings_id ) as r on (r.bowler_id = h.bowler_id and r.innings_id = h.innings_id) '''
 
-
-
 player_season = '''SELECT season_id, count(*) as Innings, sum(runs) as Runs, sum(balls)as Balls, sum(fours) as Fours, sum(sixes) as Sixes, round(cast(sum(runs) as float)/sum(balls) * 100, 2) as strike, count(outs) as Outs
     from (select four.match_id, season_id, runs, balls, outs, fours,sixes, str
     from (select foo.match_id, season_id, runs, balls, outs, fours, str
@@ -94,3 +89,21 @@ highest_season = '''SELECT firstApp_season.season_id, highest
     where striker_id = %d
     group by match_id)as foo join firstApp_match on foo.match_id = firstApp_match.match_id
     group by season_id) as food on food.season_id = firstApp_season.season_id'''
+
+wins = '''SELECT firstApp_season.season_id, wins
+    from firstApp_season left join (SELECT season_id, count(*) as wins
+    from firstApp_match
+    where (team_name_id = {0} or opponent_team_id = {0}) and match_winner_id = {0}
+    group by season_id) as foo on firstApp_season.season_id = foo.season_id'''
+
+losses = '''SELECT firstApp_season.season_id, losses
+    from firstApp_season left join (SELECT season_id, count(*) as losses
+    from firstApp_match
+    where (team_name_id = {0} or opponent_team_id = {0}) and match_winner_id != {0}
+    group by season_id) as foo on firstApp_season.season_id = foo.season_id'''
+
+nr = '''SELECT firstApp_season.season_id, nr
+    from firstApp_season left join (SELECT season_id, count(*) as nr
+    from firstApp_match
+    where (team_name_id = {0} or opponent_team_id = {0}) and is_result = 0
+    group by season_id) as foo on firstApp_season.season_id = foo.season_id'''

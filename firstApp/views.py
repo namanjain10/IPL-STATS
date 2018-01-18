@@ -60,10 +60,12 @@ def testApiView(request) :
 
 def eval_player () :
     ''''''
+
 class SeasonHome (View) :
     def get(self, request) :
-        return render (request, 'firstApp/season_home.html')
-
+        query = Season.objects.all().values()
+        dic = [i for i in query]
+        return render (request, 'firstApp/season_home.html', {'season' : dic})
 
 class SuperoverView (View) :
 
@@ -384,6 +386,68 @@ class PlayerSearchApi (APIView) :
 class PlayerHome (View) :
     def get (self, request, *args, **kwargs) :
         return render(request, "firstApp/player_home.html")
+
+class TeamHomeView (View) :
+    def get (self, request, *args, **kwargs) :
+        query = Team.objects.all().values()
+        dic = [i for i in query]
+
+        return render(request, "firstApp/team_home.html", {'team' : dic})
+
+class TeamView (View) :
+    def get (self, request, *args, **kwargs) :
+        team_id = kwargs['id']
+        name = Team.objects.filter(Team_Id = int(team_id)).get()
+        cursor = connection.cursor()
+
+        cursor.execute(wins.format(int(team_id)))
+        win = dictfetchall(cursor)
+
+        cursor.execute(losses.format(int(team_id)))
+        loss = dictfetchall(cursor)
+
+        cursor.execute(nr.format(int(team_id)))
+        Nr = dictfetchall(cursor)
+
+        for i in range (len(loss)) :
+            for j in range (len(win)) :
+                if loss[i]['Season_Id'] == win[j]['Season_Id'] :
+                    if win[j]['wins'] == None :
+                        win[j]['wins'] = 0
+
+                    loss[i]['wins'] = win[j]['wins']
+                    break
+            if loss[i]['losses'] == None :
+                loss[i]['losses'] = 0
+
+            for j in range (len(Nr)) :
+                if loss[i]['Season_Id'] == Nr[j]['Season_Id'] :
+                    if Nr[j]['nr'] == None :
+                        Nr[j]['nr'] = 0
+
+                    loss[i]['nr'] = Nr[j]['nr']
+                    break
+        # wins = Match.objects.filter(Match_Winner_Id = team_id).aggregate('Season_Id').count()
+        #
+        # loss = (Match.objects.filter(Team_Name_Id = team_id) | Match.objects.filter(Opponent_Team_Id = team_id)).filter(IS_Result = 1).exclude(Match_Winner_Id = team_id).count()
+        #
+        # NR = (Match.objects.filter(Team_Name_Id = team_id) | Match.objects.filter(Opponent_Team_Id = team_id)).exclude(IS_Result = 1).count()
+        #
+        # dic = {'win' : wins, 'loss' : loss, 'NR' : NR}
+        i = 0
+        while i !=  len(loss) :
+            loss[i]['total'] = loss[i]['wins'] + loss[i]['losses'] + loss[i]['nr']
+
+            if loss[i]['total'] == 13 :
+                loss[i]['nr'] += 1
+                loss[i]['total'] = 14
+
+            if loss[i]['total'] == 0 :
+                del loss[i]
+                i = i-1
+            i += 1
+        dic = loss
+        return render (request, 'firstApp/team.html', {'name': name.Team_Name,'team' : dic})
 
 class test (View) :
 

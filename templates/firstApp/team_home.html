@@ -1,20 +1,21 @@
 {% extends "firstApp/index.html" %}
 {% block content %}
+
 <div class="container" style = "padding-top : 20px">
     <div class="table-responsive col-md-8" style = "padding-left : 40%">
         <table class = "table table-stdiped table-bordered table-hover" style = "text-align : center">
             <thead>
-                <tr><td><strong>Season Year</strong></td></tr>
+                <tr><td><strong>Teams</strong></td></tr>
             </thead>
             <tbody >
-                {% for p in season %}
+                {% for p in team %}
                     <tr>
-                        <td><a href="/season/{{p.Season_Id}}/">{{p.Season_Year}}</a></td>
+                        <td><a href="/team/{{p.Team_Id}}/">{{p.Team_Name}}</a></td>
                     </tr>
                 {% endfor %}
-
             </tbody>
         </table>
     </div>
 </div>
+
 {% endblock content %}

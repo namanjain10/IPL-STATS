@@ -1,5 +1,17 @@
 h3 {
-    color: rgb(198, 37, 95);
+    color: rgb(37, 74, 198);
+}
+
+h1 {
+    color: rgb(75, 6, 150);
+}
+
+h2 {
+    color: rgb(79, 191, 40);
+}
+
+h4 {
+    color: rgb(33, 226, 252);
 }
 
 #search {
@@ -47,7 +59,7 @@ h3 {
 
 .carousel-caption {
     font-size: 25px;
-    color: rgb(234, 242, 71);
+    color: rgb(238, 222, 222);
 }
 
 .table-responsive {

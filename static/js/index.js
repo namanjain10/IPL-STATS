@@ -36,6 +36,11 @@
 //);
 //});
 
+$("#dropdownMenuSeason").hover(function () {
+    $("#dropdownMenuSeason").show();
+    }
+);
+
 $(window).ready( function () {
     $.ajax({url: "http://127.0.0.1:8000/api",
         data: {
@@ -75,8 +80,6 @@ $(window).ready( function () {
     }});
 });
 
-
-
 $(document).ajaxComplete(function () {
 
     var TotalRuns = 0;
@@ -91,7 +94,7 @@ $(document).ajaxComplete(function () {
         TotalBalls += parseFloat($(this).text());
     });
 
-    // console.log(TotalRuns,TotalBalls);
+    //console.log(TotalRuns,TotalBalls);
 
     $('.runs').eq(0).css('color','red');
 
@@ -161,3 +164,33 @@ function player(event) {
 //         $('<td>'),
 //         $('<td>').TotalRuns,
 //         $('<td>').TotalBalls);
+
+var Total = 0, TotalWins = 0, TotalLosses = 0, TotalNr = 0;
+
+$('.team_wins').each(function() {
+    TotalWins += parseFloat($(this).text());
+});
+
+$('.team_losses').each(function() {
+    TotalLosses += parseFloat($(this).text());
+});
+
+$('.team_nr').each(function() {
+    TotalNr += parseFloat($(this).text());
+});
+
+$('.team_total').each(function() {
+    Total += parseFloat($(this).text());
+});
+
+console.log(Total, TotalWins);
+
+$('#team_table tbody').append(
+    $('<tr>').css("font-weight","bold").append(
+        $('<td>').text('Total'),
+        $('<td>').text(Total),
+        $('<td>').text(TotalWins),
+        $('<td>').text(TotalLosses),
+        $('<td>').text(TotalNr)
+    ),
+    );
