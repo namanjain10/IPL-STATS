@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^mom/', views.manOfTheMatchView.as_view()),
     url(r'^captain/', views.captainView.as_view()),
     url(r'^api/', views.playerViewApi.as_view()),
+    url(r'^all-players/', views.allPlayersView.as_view()),
     url(r'^test/', views.testApiView)
 ]
 

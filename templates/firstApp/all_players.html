@@ -1,0 +1,25 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+
+<div class="table-responsive">
+    <table class = "table table-striped table-bordered table-hover">
+        <thead>
+            <td><strong>Player Name</strong></td>
+            <td><strong>Batting Hand</strong></td>
+            <td><strong>Bowling Skill</strong></td>
+            <td><strong>Country</strong></td>
+        </thead>
+        <tbody>
+            {%for p in player %}
+            <tr>
+                <td><a href="/player/{{p.Player_Id}}">{{p.Player_Name}}</a></td>
+                <td>{{p.Batting_Hand}}</td>
+                <td>{{p.Bowling_Skill}}</td>
+                <td>{{p.Country}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}

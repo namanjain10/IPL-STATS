@@ -73,7 +73,7 @@ player_season = '''SELECT season_id, count(*) as Innings, sum(runs) as Runs, sum
     group by match_id) as sixes on four.match_id = sixes.match_id)as total
     group by season_id'''
 
-fifty_season = '''SELECT firstApp_season.season_id, hundreds
+fifty_season_player = '''SELECT firstApp_season.season_id, hundreds
     from firstApp_season left join (select season_id, count(*) as hundreds
     from (select match_id, sum(batsman_scored) as runs
     from firstApp_ball_by_ball

@@ -124,10 +124,10 @@ class playerView (View) :
 
         score = dictfetchall(cursor)
 
-        cursor.execute(fifty_season%(int(player_id), 50, 100))
+        cursor.execute(fifty_season_player%(int(player_id), 50, 100))
         fifty = dictfetchall(cursor)
-
-        cursor.execute(fifty_season%(int(player_id), 100, 200))
+        
+        cursor.execute(fifty_season_player%(int(player_id), 100, 200))
         hundred = dictfetchall(cursor)
 
         cursor.execute(highest_season%(int(player_id)))
@@ -154,7 +154,6 @@ class playerView (View) :
                 if score[i]['season_id'] == highest[j]['Season_Id'] :
                     if highest[j]['highest'] == None :
                         highest[j]['highest'] = 0
-
                     score[i]['highest'] = highest[j]['highest']
                     break
 
@@ -332,6 +331,12 @@ class captainView (View) :
 
         return render(request,'firstApp/captain.html',context)
 
+class allPlayersView (View) :
+    def get (self, request, *args, **kwargs) :
+        query = Player.objects.all().values()
+        dic = [i for i in query]
+        return render(request, 'firstApp/all_players.html', {'player' : dic})
+
 class seasonView (View) :
     def get (self, request, *args, **kwargs) :
 
@@ -385,7 +390,6 @@ class PlayerSearchApi (APIView) :
         # cursor = connection.cursor()
         # cursor.execute("SELECT * from testApp_player where Player_Name like '%%%s%%'"%(request.GET['name']))
         # dic = dictfetchall(cursor)
-
         query = Player.objects.filter(Player_Name__contains=request.GET['name']).values()
         dic = [i for i in query]
 
