@@ -29,7 +29,7 @@
 <div style = "clear: both"></div>
 
 <div class="table-responsive">
-    <table class = "table table-striped table-bordered table-hover">
+    <table class = "table table-striped table-bordered table-hover" id = "player_table">
         <thead>
             <td><strong>Season Year</strong></td>
             <td><strong>Innings</strong></td>
@@ -49,17 +49,17 @@
             {%for p in score %}
             <tr>
                 <td>{{ p.season_id|add:"2007"}}</td>
-                <td>{{p.Innings}}</td>
-                <td>{% sub p.Innings p.Outs %}</td>
-                <td>{{p.Runs}}</td>
-                <td>{{p.highest}}</td>
-                <td>{%div p.Runs p.Outs%}</td>
-                <td>{{p.Balls}}</td>
+                <td class = "player_innings">{{p.Innings}}</td>
+                <td class = "player_notout">{% sub p.Innings p.Outs %}</td>
+                <td class = "player_runs">{{p.Runs}}</td>
+                <td class = "player_highest">{{p.highest}}</td>
+                <td >{%div p.Runs p.Outs%}</td>
+                <td class = "player_balls">{{p.Balls}}</td>
                 <td>{{p.strike}}</td>
-                <td>{{p.hundred}}</td>
-                <td>{{p.fifty}}</td>
-                <td>{{p.Fours}}</td>
-                <td>{{p.Sixes}}</td>
+                <td class = "player_hundred">{{p.hundred}}</td>
+                <td class = "player_fifty">{{p.fifty}}</td>
+                <td class = "player_four">{{p.Fours}}</td>
+                <td class = "player_six">{{p.Sixes}}</td>
 
             </tr>
             {% endfor %}

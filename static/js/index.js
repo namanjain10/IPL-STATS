@@ -146,25 +146,6 @@ function player(event) {
     }
 }
 
-// var TotalRuns = 0;
-// var TotalBalls = 0;
-//
-// $("#runs").each(function() {
-//     TotalRuns += parseFloat($(this).text());
-// });
-//
-// $("#balls").each(function() {
-//     TotalBalls += parseFloat($(this).text());
-// });
-// $('#runs').eq(0).css('color','blue');
-// //console.log(TotalRuns,TotalBalls);
-// //$("#data").append('<tr><td></td><td>' +TotalRuns+ '</td><td>' + TotalBalls +  '</td></tr>');
-//
-// $('#data').append(
-//         $('<td>'),
-//         $('<td>').TotalRuns,
-//         $('<td>').TotalBalls);
-
 var Total = 0, TotalWins = 0, TotalLosses = 0, TotalNr = 0;
 
 $('.team_wins').each(function() {
@@ -183,8 +164,6 @@ $('.team_total').each(function() {
     Total += parseFloat($(this).text());
 });
 
-console.log(Total, TotalWins);
-
 $('#team_table tbody').append(
     $('<tr>').css("font-weight","bold").append(
         $('<td>').text('Total'),
@@ -193,4 +172,64 @@ $('#team_table tbody').append(
         $('<td>').text(TotalLosses),
         $('<td>').text(TotalNr)
     ),
-    );
+);
+
+
+var playerInnings = 0, playerHighest = 0, playerRuns = 0, playerBalls = 0, playerNotOut = 0, playerHundred = 0, playerFifty = 0, playerFour = 0, playerSix = 0;
+
+$('.player_innings').each(function() {
+    playerInnings += parseFloat($(this).text());
+});
+
+$('.player_runs').each(function() {
+    playerRuns += parseFloat($(this).text());
+});
+
+$('.player_balls').each(function() {
+    playerBalls += parseFloat($(this).text());
+});
+
+$('.player_four').each(function() {
+    playerFour += parseFloat($(this).text());
+});
+
+$('.player_six').each(function() {
+    playerSix += parseFloat($(this).text());
+});
+
+$('.player_fifty').each(function() {
+    playerFifty += parseFloat($(this).text());
+});
+
+$('.player_hundred').each(function() {
+    playerHundred += parseFloat($(this).text());
+});
+
+$('.player_highest').each(function() {
+    if (playerHighest < parseFloat($(this).text())) {
+        playerHighest = parseFloat($(this).text());
+    }
+});
+
+$('.player_notout').each(function() {
+    playerNotOut += parseFloat($(this).text());
+});
+
+$('#player_table tbody').append(
+    $('<tr>').css("font-weight","bold").append(
+        $('<td>').text('Total'),
+        $('<td>').text(playerInnings),
+        $('<td>').text(playerNotOut),
+        $('<td>').text(playerRuns),
+        $('<td>').text(playerHighest),
+        $('<td>').text((playerRuns/(playerInnings -  playerNotOut)).toFixed(2)),
+        $('<td>').text(playerBalls),
+        $('<td>').text((playerRuns/playerBalls * 100).toFixed(2)),
+        $('<td>').text(playerHundred),
+        $('<td>').text(playerFifty),
+        $('<td>').text(playerFour),
+        $('<td>').text(playerSix)
+    ),
+);
+
+console.log(playerInnings, playerHighest);
