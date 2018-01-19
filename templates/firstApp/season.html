@@ -79,7 +79,7 @@
             <tbody>
                 {%for p in runs %}
                 <tr>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.runs}}</td>
                 </tr>
                 {% endfor %}
@@ -102,7 +102,7 @@
                 {%for p in highest %}
                 <tr>
                     <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
-                    <td><a href="/player/{{p.Player_Id}}">{{p.player_name}}</a></td>
+                    <td><a href="/player/{{p.player_id}}">{{p.player_name}}</a></td>
                     <td>{{p.highest}}</td>
                 </tr>
                 {% endfor %}
@@ -124,7 +124,7 @@
             <tbody>
                 {%for p in six %}
                 <tr>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.sixes}}</td>
                 </tr>
                 {% endfor %}
@@ -146,7 +146,7 @@
             <tbody>
                 {%for p in four %}
                 <tr>
-                    <td class="col-md-4"><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td class="col-md-4"><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td class="col-md-2">{{p.sixes}}</td>
                 </tr>
                 {% endfor %}
@@ -169,7 +169,7 @@
             <tbody>
                 {%for p in strike %}
                 <tr>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.runs}}</td>
                     <td>{{p.balls}}</td>
                     <td>{{p.str}}</td>
@@ -192,7 +192,7 @@
             <tbody>
                 {%for p in fifty %}
                 <tr>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.fifty}}</td>
                 </tr>
                 {% endfor %}
@@ -214,7 +214,7 @@
             <tbody>
                 {%for p in hundred %}
                 <tr>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.fifty}}</td>
                 </tr>
                 {% endfor %}
@@ -238,7 +238,7 @@
                 {%for p in four_innings %}
                 <tr>
                     <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.fours}}</td>
                 </tr>
                 {% endfor %}
@@ -262,7 +262,7 @@
                 {%for p in six_innings %}
                 <tr>
                     <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
-                    <td><a href="/player/{{p.Striker_Id}}">{{p.Player_Name}}</a></td>
+                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
                     <td>{{p.fours}}</td>
                 </tr>
                 {% endfor %}

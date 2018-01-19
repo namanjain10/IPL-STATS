@@ -206,3 +206,53 @@ four_innings_season = '''SELECT striker_id, player_name, fours, match_id, match_
     group by firstApp_ball_by_ball.match_id, striker_id
     order by count(*) desc) as foo join firstApp_player on player_id = striker_id
     limit 50'''
+
+
+partnership = '''SELECT coalesce(fo.match_id, od.match_id) as match_id, coalesce(runs1,0) as runs1 , coalesce(extras1,0) as extras1, coalesce(balls1,0) as balls1, coalesce(runs2,0) as runs2, coalesce(extras2,0) as extras2, coalesce(balls2,0) as balls2
+    from (select match_id, sum(batsman_scored) as runs1, count(*) as balls1, sum(extra_runs) as extras1
+    from firstApp_ball_by_ball
+    where (striker_id = 1 and non_striker_id = 2)
+    group by match_id) as fo
+
+    full outer join
+
+    (select match_id, sum(batsman_scored) as runs2, count(*) as balls2, sum(extra_runs) as extras2
+    from firstApp_ball_by_ball
+    where (striker_id = 2 and non_striker_id = 1)
+    group by match_id) as od on fo.match_id= od.match_id;'''
+
+
+season_bowling = '''SELECT season_id, sum(runs) as runs, sum(num_extras) as num, sum(extra) as extra, sum(wickets) as wickets, sum(balls) as balls
+from (select bow.match_id, runs, num_extras, extra, wickets, match_date, balls
+from (select d.match_id, match_date, sum(batsman_scored) as runs, count (extra_type) as num_extras, coalesce(sum (extra_runs),0)as extra, count (dissimal_type) as wickets
+from (select *
+      from firstApp_ball_by_ball
+      where bowler_id = 232
+
+      except
+
+      (select *
+      from firstApp_ball_by_ball
+      where bowler_id = 232 and dissimal_type = 'run out'
+
+      union
+
+      select *
+      from firstApp_ball_by_ball
+      where (extra_type = 'byes' or extra_type = 'legbyes'))) as d join firstApp_match on firstApp_match.match_id = d.match_id
+
+group by d.match_id, match_date
+order by d.match_id) as bow join
+
+(select match_id, count(*) as balls
+from (select *
+from firstApp_ball_by_ball
+where bowler_id = 232
+
+except
+
+select *
+ from firstApp_ball_by_ball
+ where bowler_id = 232 and (extra_type = 'wides' or extra_type = 'noballs')) as foo
+ group by match_id) as ler on bow.match_id = ler.match_id) as d join firstApp_match on firstApp_match.match_id = d.match_id
+ group by season_id'''

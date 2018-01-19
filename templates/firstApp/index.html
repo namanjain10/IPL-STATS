@@ -9,9 +9,9 @@
 
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
-    <body>
+    <body style="background-color:rgb(250, 250, 250)">
 
-        <div class="container">
+        <div class="container" style="padding-top : 10px; background-color:white">
             <ul class="nav nav-tabs">
               <li role="presentation" class="active"><a href="/">Home</a></li>
               <li role="presentation"><a href="/player-home/">Players</a></li>
@@ -97,11 +97,14 @@
         </a>
                 </div>
 
+        {{part}}
+        <div class="container" style="padding-top:10px">
+            <ul style="list-style-type: none; font-size : 15px">
+                <li><a href="/mom">Most Man of the Match Awards</a></li>
+                <li><a href="/captain">Captaincy Records</a></li>
+                <li><a href="/superover">SuperOver</a></li>
+            </ul>
 
-        <div class="container">
-            <a href="/mom">Most Man of the Match Awards</a>
-            <a href="/captain">Captaincy Records</a>
-            <a href="/superover">SuperOver</a>
             {% endblock content %}
         </div>
 

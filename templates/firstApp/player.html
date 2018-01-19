@@ -16,7 +16,7 @@
 
     <div class="container">
         {% for p in player %}
-        <a href="/runs-match/{{p.Player_Id}}">Runs per Match</a>
+        <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a>
         {%endfor%}
     </div>
 </div>
@@ -65,6 +65,6 @@
             {% endfor %}
         </tbody>
     </table>
-
+{{bowling}}
 </div>
 {% endblock content %}

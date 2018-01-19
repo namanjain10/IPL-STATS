@@ -8,7 +8,6 @@ from .models import Ball_by_Ball, Match, Player, Player_Match, Season, Team
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.utils import timezone
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from .google_image import get_image_link
@@ -27,39 +26,11 @@ def myconverter(o):
         return o.__str__()
 
 def index (request):
-    team = Player.objects.all()
     cursor = connection.cursor()
+    return render(request,'firstApp/index.html')
 
-    cursor.execute('''
-    SELECT striker_id, player_name, sum(batsman_scored) as runs, count (*) as balls ,(cast(sum(batsman_scored) as float) / count (*) * 100) as str
-    from (select * from firstApp_ball_by_ball where match_id = 335988 and innings_id = 1
-    except
-    select * from firstApp_ball_by_ball
-    where match_id = 335988 and innings_id = 1 and (extra_type = 'wides' or extra_type = 'noballs')) as d join firstApp_player on player_id = striker_id
-    group by striker_id, player_name
-    ''')
-
-    pl = dictfetchall(cursor)
-
-    cursor.execute ('''SELECT player_dissimal_id, player_name, count(*) as count
-    from firstApp_ball_by_ball join firstApp_player on player_id = player_dissimal_id
-
-    group by player_dissimal_id, player_name
-    order by player_dissimal_id''')
-
-    outs = dictfetchall (cursor)
-
-    cursor.execute('''SELECT * from firstApp_player where Player_Id = 57''')
-
-    k = dictfetchall(cursor)
-
-    my_dict = {'pi' : pl,'outs' : outs , 'k' : k}
-    return render(request,'firstApp/index.html',context = my_dict)
 def testApiView(request) :
     return render(request, 'firstApp/api.html')
-
-def eval_player () :
-    ''''''
 
 class SeasonHome (View) :
     def get(self, request) :
@@ -352,9 +323,13 @@ class allPlayersApi (APIView) :
         query = query.values()
 
         dic = [i for i in query]
-        print (dic)
         res = json.dumps(dic, default=myconverter)
         return Response(res)
+
+class seasonApi (APIView) :
+    def get (self, request, *args, **kwargs) :
+        season_id = kwargs['id']
+        request.GET['category']
 
 class seasonView (View) :
     def get (self, request, *args, **kwargs) :
@@ -470,7 +445,7 @@ class TeamView (View) :
         #
         # dic = {'win' : wins, 'loss' : loss, 'NR' : NR}
         i = 0
-        while i !=  len(loss) :
+        while i != len(loss) :
             loss[i]['total'] = loss[i]['wins'] + loss[i]['losses'] + loss[i]['nr']
 
             if loss[i]['total'] == 13 :

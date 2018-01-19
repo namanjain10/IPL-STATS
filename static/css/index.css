@@ -14,13 +14,21 @@ h4 {
     color: rgb(40, 153, 168);
 }
 
-/* .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-   background-color: rgb(218, 242, 183);
+td {
+    font-size: 14px;
 }
 
-.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
-   background-color: rgb(190, 221, 242);
+/* a{
+    color : rgb(10, 137, 255);
 } */
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+   background-color: rgb(230, 241, 234);
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: rgb(241, 247, 235);
+}
 
 .season_table {
     padding-left: 10px;
@@ -75,7 +83,12 @@ h4 {
 
 .carousel-caption {
     font-size: 25px;
-    color: rgb(238, 222, 222);
+    color: yellow;
+    font-weight: bold;
+}
+
+thead {
+    background-color: rgb(190, 218, 242);
 }
 
 .table-responsive {
