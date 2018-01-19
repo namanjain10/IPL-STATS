@@ -1,0 +1,23 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+
+<h3>{{name}} - Teams Played For per Season</h3>
+<div class="table-responsive">
+    <table class = "table table-striped table-bordered table-hover" id = "team_season">
+        <thead>
+            <td><strong>Season Year</strong></td>
+            <td><strong>Team Name</strong></td>
+
+        </thead>
+        <tbody>
+            {%for p in team %}
+            <tr>
+                <td>{{p.season_id|add:"2007"}}</td>
+                <td>{{p.Team_Name}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}

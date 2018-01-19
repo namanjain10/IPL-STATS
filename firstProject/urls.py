@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^superover/', views.SuperoverView.as_view()),
     url(r'^team-home/', views.TeamHomeView.as_view()),
     url(r'^team/(?P<id>\d+)/$', views.TeamView.as_view()),
+    url(r'^team-season/(?P<id>\d+)/$', views.teamSeasonView.as_view()),
     url(r'^help/', views.test.as_view()),
     url(r'^player-home/', views.PlayerHome.as_view()),
     url(r'^season-home/', views.SeasonHome.as_view()),

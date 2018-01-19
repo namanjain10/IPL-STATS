@@ -17,7 +17,9 @@
     <div style="padding-top : 10px">
         {% for p in player %}
         <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a><br>
-        <a href="/wickets-match/{{p.Player_Id}}">Per Match Bowling Analysis</a>
+        <a href="/wickets-match/{{p.Player_Id}}">Per Match Bowling Analysis</a><br>
+        <a href="/team-season/{{p.Player_Id}}">Teams played for per Season</a><br>
+
         {%endfor%}
     </div>
 </div>
@@ -88,9 +90,9 @@
                 <td>{{p.season_id|add:"2007"}}</td>
                 <td class = "bowler_wickets">{{p.wickets}}</td>
                 <td class = "bowler_runs">{{p.runs|add:p.extra}}</td>
-                <td class = "bowler_runs">{{p.extra}}</td>
+                <td class = "bowler_extras">{{p.extra}}</td>
                 <td class = "bowler_balls">{{p.balls}}</td>
-                <td >{%econ p.balls p.runs%}</td>
+                <td >{%econ p.balls p.runs p.extra%}</td>
                 <td >{%avg p.runs p.extra p.wickets%}</td>
                 <td >{%div p.balls p.wickets%}</td>
 

@@ -287,3 +287,11 @@ per_match_bowling = '''SELECT food.match_id, match_date, runs, extra_runs, coale
     where bowler_id = {0} and dissimal_type != '' and dissimal_type != 'runout'
     group by match_id) as hood on food.match_id = hood.match_id
     order by match_date'''
+
+
+team_season = '''SELECT season_id, firstApp_team.team_id, team_name
+    from (select season_id, team_id
+    from firstApp_player_match join firstApp_match on firstApp_match.match_id = firstApp_player_match.match_id
+    where player_id = {0}
+    group by season_id, team_id) as foo join firstApp_team on firstApp_team.team_id = foo.team_id
+    order by season_id'''

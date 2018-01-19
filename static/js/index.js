@@ -229,7 +229,7 @@ $('.player_notout').each(function() {
 
 $('#player_table tbody').append(
     $('<tr>').css("font-weight","bold").append(
-        $('<td>').text('Total'),
+        $('<td>').text('Career'),
         $('<td>').text(playerInnings),
         $('<td>').text(playerNotOut),
         $('<td>').text(playerRuns),
@@ -295,3 +295,35 @@ function submit_data (event) {
         }
     });
 }
+
+
+var bowlerWickets = 0, bowlerRuns = 0, bowlerExtras = 0, bowlerBalls = 0
+
+$('.bowler_runs').each(function() {
+    bowlerRuns += parseFloat($(this).text());
+});
+
+$('.bowler_wickets').each(function() {
+    bowlerWickets += parseFloat($(this).text());
+});
+
+$('.bowler_extras').each(function() {
+    bowlerExtras += parseFloat($(this).text());
+});
+
+$('.bowler_balls').each(function() {
+    bowlerBalls += parseFloat($(this).text());
+});
+
+$('#bowler_table tbody').append(
+    $('<tr>').css("font-weight","bold").append(
+        $('<td>').text('Career'),
+        $('<td>').text(bowlerWickets),
+        $('<td>').text(bowlerRuns),
+        $('<td>').text(bowlerExtras),
+        $('<td>').text(bowlerBalls),
+        $('<td>').text((bowlerRuns/(bowlerBalls/6)).toFixed(2)),
+        $('<td>').text((bowlerRuns/bowlerWickets).toFixed(2)),
+        $('<td>').text((bowlerBalls/bowlerWickets).toFixed(2))
+    ),
+);

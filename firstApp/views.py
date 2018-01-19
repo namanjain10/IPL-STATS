@@ -484,3 +484,13 @@ class test (View) :
         #print (len(pl[0]['Dissimal_Type']), 'namaan')
         context = {'batting' : pl}#, 'bowling' : bowling}
         return render(request, "firstApp/help.html", context)
+
+class teamSeasonView (View) :
+    def get (self, request, *args, **kwargs) :
+        player_id = kwargs['id']
+        name = Player.objects.filter(Player_Id = int(player_id)).get()
+        name = name.Player_Name
+        cursor = connection.cursor()
+        cursor.execute(team_season.format(int(player_id)))
+        team = dictfetchall(cursor)
+        return render (request, 'firstApp/team_season.html', {'team': team, 'name':name})

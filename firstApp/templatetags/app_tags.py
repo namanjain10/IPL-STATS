@@ -14,9 +14,9 @@ def div(arg1, arg2):
         return '-'
 
 @register.assignment_tag
-def econ(balls, runs):
+def econ(balls, runs, extra):
     try :
-        return round(runs/(balls/6),2)
+        return round((runs+extra)/(balls/6),2)
     except :
         return '-'
 
