@@ -222,37 +222,68 @@ partnership = '''SELECT coalesce(fo.match_id, od.match_id) as match_id, coalesce
     group by match_id) as od on fo.match_id= od.match_id;'''
 
 
-season_bowling = '''SELECT season_id, sum(runs) as runs, sum(num_extras) as num, sum(extra) as extra, sum(wickets) as wickets, sum(balls) as balls
-from (select bow.match_id, runs, num_extras, extra, wickets, match_date, balls
-from (select d.match_id, match_date, sum(batsman_scored) as runs, count (extra_type) as num_extras, coalesce(sum (extra_runs),0)as extra, count (dissimal_type) as wickets
-from (select *
+season_bowling = '''SELECT food.season_id, runs, extra, wickets, balls
+from (SELECT season_id, sum(runs) as runs, sum(extra) as extra, sum(balls) as balls
+    from (select bow.match_id, runs, extra, match_date, balls
+    from (select d.match_id, match_date, sum(batsman_scored) as runs, coalesce(sum (extra_runs),0)as extra
+    from (select *
       from firstApp_ball_by_ball
-      where bowler_id = 232
-
+      where bowler_id = {0}
       except
-
-      (select *
+      select *
       from firstApp_ball_by_ball
-      where bowler_id = 232 and dissimal_type = 'run out'
+      where bowler_id = {0} and dissimal_type = 'run out'
 
       union
 
       select *
+        from firstApp_ball_by_ball
+        where bowler_id = {0}
+        except
+      select *
       from firstApp_ball_by_ball
-      where (extra_type = 'byes' or extra_type = 'legbyes'))) as d join firstApp_match on firstApp_match.match_id = d.match_id
+      where (extra_type = 'byes' or extra_type = 'legbyes')) as d join firstApp_match on firstApp_match.match_id = d.match_id
 
-group by d.match_id, match_date
-order by d.match_id) as bow join
+    group by d.match_id, match_date
+    order by d.match_id) as bow join (select match_id, count(*) as balls
+    from (select *
+    from firstApp_ball_by_ball
+    where bowler_id = {0}
+    except
+    select *
+     from firstApp_ball_by_ball
+     where bowler_id = {0} and (extra_type = 'wides' or extra_type = 'noballs')) as foo
+     group by match_id) as ler on bow.match_id = ler.match_id) as d join firstApp_match on firstApp_match.match_id = d.match_id
+     group by season_id ) as food left join (select season_id, sum(wickets) as wickets
+     from (select match_id, count(*) as wickets
+     from firstApp_ball_by_ball
+     where bowler_id = {0} and dissimal_type != '' and dissimal_type != 'runout'
+     group by match_id)as h join firstApp_match on firstApp_match.match_id = h.match_id
+     group by season_id) as hood on food.season_id = hood.season_id'''
 
-(select match_id, count(*) as balls
-from (select *
-from firstApp_ball_by_ball
-where bowler_id = 232
 
-except
+per_match_bowling = '''SELECT food.match_id, match_date, runs, extra_runs, coalesce(wickets,0) as wickets, venue_name, city_name
+    from (SELECT d.match_id, match_date, coalesce(sum(batsman_scored),0) as runs,coalesce(sum (extra_runs),0) as extra_runs, venue_name, city_name
+    from (select *
+      from firstApp_ball_by_ball
+      where bowler_id = {0}
+      except
+      select *
+      from firstApp_ball_by_ball
+      where bowler_id = {0} and dissimal_type = 'run out'
 
-select *
- from firstApp_ball_by_ball
- where bowler_id = 232 and (extra_type = 'wides' or extra_type = 'noballs')) as foo
- group by match_id) as ler on bow.match_id = ler.match_id) as d join firstApp_match on firstApp_match.match_id = d.match_id
- group by season_id'''
+      union
+
+      select *
+        from firstApp_ball_by_ball
+        where bowler_id = {0}
+        except
+      select *
+      from firstApp_ball_by_ball
+      where (extra_type = 'byes' or extra_type = 'legbyes')) as d join firstApp_match on firstApp_match.match_id = d.match_id
+    group by d.match_id, match_date, venue_name, city_name
+    order by d.match_id) as food left join (select match_id, count(*) as wickets
+    from firstApp_ball_by_ball
+    where bowler_id = {0} and dissimal_type != '' and dissimal_type != 'runout'
+    group by match_id) as hood on food.match_id = hood.match_id
+    order by match_date'''

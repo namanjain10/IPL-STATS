@@ -5,7 +5,7 @@
 
 <div id = "player_details">
     {% for p in player %}
-    <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3>
+    <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3><br>
     <h5><strong>Name</strong> : {{p.Player_Name}}</h5>
     <h5><strong>DOB</strong> : {{p.DOB}}</h5>
     <h5><strong>Age</strong> : {{p.age_years}} years {{p.age_months}} months {{p.age_days}} days</h5>
@@ -14,9 +14,10 @@
 
     {%endfor%}
 
-    <div class="container">
+    <div style="padding-top : 10px">
         {% for p in player %}
-        <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a>
+        <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a><br>
+        <a href="/wickets-match/{{p.Player_Id}}">Per Match Bowling Analysis</a>
         {%endfor%}
     </div>
 </div>
@@ -29,6 +30,7 @@
 <div style = "clear: both"></div>
 
 <div class="table-responsive">
+    <h3>Batting Stats</h3>
     <table class = "table table-striped table-bordered table-hover" id = "player_table">
         <thead>
             <td><strong>Season Year</strong></td>
@@ -65,6 +67,37 @@
             {% endfor %}
         </tbody>
     </table>
-{{bowling}}
+</div>
+<div class="table-responsive">
+    <h3>Bowling Stats</h3>
+    <table class = "table table-striped table-bordered table-hover" id = "bowler_table">
+        <thead>
+            <td><strong>Season Year</strong></td>
+            <td><strong>Wickets</strong></td>
+            <td><strong>Runs Conceded</strong></td>
+            <td><strong>Extras Conceded</strong></td>
+            <td><strong>Balls Bowled</strong></td>
+            <td><strong>Economy</strong></td>
+            <td><strong>Average</strong></td>
+            <td><strong>Strike Rate</strong></td>
+
+        </thead>
+        <tbody>
+            {%for p in bowling %}
+            <tr>
+                <td>{{p.season_id|add:"2007"}}</td>
+                <td class = "bowler_wickets">{{p.wickets}}</td>
+                <td class = "bowler_runs">{{p.runs|add:p.extra}}</td>
+                <td class = "bowler_runs">{{p.extra}}</td>
+                <td class = "bowler_balls">{{p.balls}}</td>
+                <td >{%econ p.balls p.runs%}</td>
+                <td >{%avg p.runs p.extra p.wickets%}</td>
+                <td >{%div p.balls p.wickets%}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock content %}

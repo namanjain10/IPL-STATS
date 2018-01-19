@@ -11,4 +11,18 @@ def div(arg1, arg2):
     try :
         return round(arg1 / arg2,2)
     except :
-        return '-'    
+        return '-'
+
+@register.assignment_tag
+def econ(balls, runs):
+    try :
+        return round(runs/(balls/6),2)
+    except :
+        return '-'
+
+@register.assignment_tag
+def avg(runs, extra, wickets):
+    try :
+        return round((runs+extra) / wickets,2)
+    except :
+        return '-'

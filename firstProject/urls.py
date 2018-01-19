@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^all-player-api/', views.allPlayersApi.as_view()),
     url(r'^api/', views.playerViewApi.as_view()),
     url(r'^player-name-api/',views.PlayerSearchApi.as_view()),
-    
+    url(r'^wickets-match/(?P<id>\d+)/$', views.wicketsMatchView.as_view()),
     url(r'^player/(?P<id>\d+)/$', views.playerView.as_view()),
     url(r'^season/(?P<id>\d+)/$', views.seasonView.as_view()),
     url(r'^runs-match/(?P<id>\d+)/$', views.runsMatchView.as_view()),

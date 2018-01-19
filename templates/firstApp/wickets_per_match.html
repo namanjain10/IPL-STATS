@@ -1,0 +1,26 @@
+{% extends "firstApp/index.html" %}
+{% block content %}
+
+<h3>{{name}} - Batting Analysis Per Match</h3>
+
+<div class="table-responsive">
+    <table class = "table table-striped table-bordered table-hover">
+        <thead>
+            <td class="col-md-3"><strong>Match Date</strong></td>
+            <td><strong>Venue</strong></td>
+            <td class="col-md-2"><strong>Figures</strong></td>
+        </thead>
+        <tbody>
+            {%for p in bowl %}
+            <tr>
+                <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
+                <td>{{p.venue_name}}, {{p.city_name}}</td>
+                <td>{{p.wickets}} - {{p.runs|add:p.extra_runs}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock content %}

@@ -104,6 +104,9 @@ class playerView (View) :
         cursor.execute(highest_season%(int(player_id)))
         highest = dictfetchall(cursor)
 
+        cursor.execute(season_bowling.format(int(player_id)))
+        bowling = dictfetchall(cursor)
+
         for i in range (len(score)) :
             for j in range (len(fifty)) :
                 if score[i]['season_id'] == fifty[j]['Season_Id'] :
@@ -135,7 +138,7 @@ class playerView (View) :
             if score[i]['Sixes'] == None :
                 score[i]['Sixes'] = 0
 
-        context = {'player' : player, 'score' : score}
+        context = {'player' : player, 'score' : score, 'bowling':bowling}
         return render(request, "firstApp/player.html", context)
 
 class matchView (View) :
@@ -458,6 +461,17 @@ class TeamView (View) :
             i += 1
         dic = loss
         return render (request, 'firstApp/team.html', {'name': name,'team' : dic})
+
+class wicketsMatchView (View) :
+    def get (self, request, *args, **kwargs) :
+        player_id = kwargs['id']
+        cursor = connection.cursor()
+        name = Player.objects.filter(Player_Id = int(player_id)).get()
+        name = name.Player_Name
+
+        cursor.execute(per_match_bowling.format(int(player_id)))
+        bowl = dictfetchall(cursor)
+        return render (request, 'firstApp/wickets_per_match.html', {'bowl': bowl, 'name':name})
 
 class test (View) :
 

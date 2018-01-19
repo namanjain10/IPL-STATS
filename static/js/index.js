@@ -43,7 +43,7 @@ $('h3:contains(Eng)').css("color","rgb(19, 32, 170)");
 $('h3:contains(Pak)').css("color","rgb(56, 142, 4)");
 $('h3:contains(South)').css("color","rgb(15, 177, 17)");
 $('h3:contains(Sri)').css("color","rgb(13, 67, 117)");
-$('h3:contains(Aus)').css("color","#ffda3c");
+$('h3:contains(Aus)').css("color","#f4ca1c");
 $('h3:contains(Bang)').css("color","rgb(33, 99, 25)");
 $('h3:contains(Zim)').css("color","rgb(180, 23, 23)");
 $('h3:contains(Neth)').css("color","rgb(224, 122, 16)");
