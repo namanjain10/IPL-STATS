@@ -20,21 +20,24 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^$', include('firstApp.urls')),
+    url(r'^admin/', admin.site.urls),
+
+    url(r'^all-player-api/', views.allPlayersApi.as_view()),
+    url(r'^api/', views.playerViewApi.as_view()),
+    url(r'^player-name-api/',views.PlayerSearchApi.as_view()),
+    
     url(r'^player/(?P<id>\d+)/$', views.playerView.as_view()),
     url(r'^season/(?P<id>\d+)/$', views.seasonView.as_view()),
     url(r'^runs-match/(?P<id>\d+)/$', views.runsMatchView.as_view()),
     url(r'^match/(?P<id>\d+)/$', views.matchView.as_view()),
-    url(r'^admin/', admin.site.urls),
     url(r'^superover/', views.SuperoverView.as_view()),
     url(r'^team-home/', views.TeamHomeView.as_view()),
     url(r'^team/(?P<id>\d+)/$', views.TeamView.as_view()),
     url(r'^help/', views.test.as_view()),
-    url(r'^player-name-api/',views.PlayerSearchApi.as_view()),
     url(r'^player-home/', views.PlayerHome.as_view()),
     url(r'^season-home/', views.SeasonHome.as_view()),
     url(r'^mom/', views.manOfTheMatchView.as_view()),
     url(r'^captain/', views.captainView.as_view()),
-    url(r'^api/', views.playerViewApi.as_view()),
     url(r'^all-players/', views.allPlayersView.as_view()),
     url(r'^test/', views.testApiView)
 ]

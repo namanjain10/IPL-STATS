@@ -2,24 +2,42 @@
 {% block content %}
 
 <div class="table-responsive">
-    <table class = "table table-striped table-bordered table-hover">
-        <thead>
-            <td><strong>Player Name</strong></td>
-            <td><strong>Batting Hand</strong></td>
-            <td><strong>Bowling Skill</strong></td>
-            <td><strong>Country</strong></td>
-        </thead>
-        <tbody>
-            {%for p in player %}
-            <tr>
-                <td><a href="/player/{{p.Player_Id}}">{{p.Player_Name}}</a></td>
-                <td>{{p.Batting_Hand}}</td>
-                <td>{{p.Bowling_Skill}}</td>
-                <td>{{p.Country}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <form id ="all_players_form" class = "form-inline" onsubmit="submit_data.call(this,event)">
+        <div class="col-md-1"></div>
+        <div class="col-md-3">
+            <strong>Select Category</strong>
+                <select class="form-control" name="category">
+                    <option value="0" selected>All Categories</option>
+                    <option value="1">Players</option>
+                    <option value="2">Umpires</option>
+                </select>
+        </div>
+
+        <div class="col-md-3">
+            <strong>Select Country</strong>
+                <select class="form-control" name="country">
+                    <option value="0" selected>All Countries</option>
+                    <option value="India">India</option>
+                    <option value="Aus">Australia</option>
+                    <option value="South">South Africa</option>
+                    <option value="Pak">Pakistan</option>
+                    <option value="Eng">England</option>
+                    <option value="New">New Zeland</option>
+                    <option value="Sri">Sri Lanka</option>
+                    <option value="West">West Indies</option>
+                    <option value="Zim">Zimbabwe</option>
+                    <option value="Neth">Netherland</option>
+                    <option value="Bang">Bangladesh</option>
+                </select>
+        </div>
+        <div class="col-md-2">
+            <input class="btn" type="submit">
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive" id = "all_players">
 
 </div>
+
 {% endblock content %}

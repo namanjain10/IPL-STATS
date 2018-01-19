@@ -126,7 +126,7 @@ class playerView (View) :
 
         cursor.execute(fifty_season_player%(int(player_id), 50, 100))
         fifty = dictfetchall(cursor)
-        
+
         cursor.execute(fifty_season_player%(int(player_id), 100, 200))
         hundred = dictfetchall(cursor)
 
@@ -333,9 +333,28 @@ class captainView (View) :
 
 class allPlayersView (View) :
     def get (self, request, *args, **kwargs) :
-        query = Player.objects.all().values()
+        return render(request, 'firstApp/all_players.html')
+
+class allPlayersApi (APIView) :
+    def get (self, request, *args, **kwargs) :
+        query = Player.objects.all()
+
+        if (request.GET['category'] != '0') :
+            if (request.GET['category'] == '1') :
+                query = query.filter(Is_Umpire = 0)
+
+            else :
+                query = query.filter(Is_Umpire = 1)
+
+        if (request.GET['country'] != '0') :
+            query = query.filter(Country__icontains= request.GET['country'])
+
+        query = query.values()
+
         dic = [i for i in query]
-        return render(request, 'firstApp/all_players.html', {'player' : dic})
+        print (dic)
+        res = json.dumps(dic, default=myconverter)
+        return Response(res)
 
 class seasonView (View) :
     def get (self, request, *args, **kwargs) :
