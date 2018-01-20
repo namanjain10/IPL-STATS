@@ -244,12 +244,50 @@ $('#player_table tbody').append(
     ),
 );
 
+var bowlerWickets = 0, bowlerRuns = 0, bowlerExtras = 0, bowlerBalls = 0
+
+$('.bowler_runs').each(function() {
+    bowlerRuns += parseFloat($(this).text());
+});
+
+$('.bowler_wickets').each(function() {
+    bowlerWickets += parseFloat($(this).text());
+});
+
+$('.bowler_extras').each(function() {
+    bowlerExtras += parseFloat($(this).text());
+});
+
+$('.bowler_balls').each(function() {
+    bowlerBalls += parseFloat($(this).text());
+});
+
+$('#bowler_table tbody').append(
+    $('<tr>').css("font-weight","bold").append(
+        $('<td>').text('Career'),
+        $('<td>').text(bowlerWickets),
+        $('<td>').text(bowlerRuns),
+        $('<td>').text(bowlerExtras),
+        $('<td>').text(bowlerBalls),
+        $('<td>').text((bowlerRuns/(bowlerBalls/6)).toFixed(2)),
+        $('<td>').text((bowlerRuns/bowlerWickets).toFixed(2)),
+        $('<td>').text((bowlerBalls/bowlerWickets).toFixed(2))
+    ),
+);
+
+$('.show').click(function(){
+    $(this).parent().find( 'li.active' ).removeClass( 'active' );
+});
+
+// var a = parseFloat(window.location.href.split('/season/')[1][0]);
+// $('.show','#season_nav').eq(a-1).addClass('active')
+
 $('.showSingle').click(function(){
-      $('.season_table').hide();
-      $( this ).parent().find( 'li.active' ).removeClass( 'active' );
-      $('.season_table').removeClass('active');
-      $('#div'+$(this).attr('target')).show();
-      $(this).addClass( 'active' );
+    $('.season_table').hide();
+    $( this ).parent().find( 'li.active' ).removeClass( 'active' );
+    $('.season_table').removeClass('active');
+    $('#div'+$(this).attr('target')).show();
+    $(this).addClass( 'active' );
 
 });
 
@@ -295,35 +333,3 @@ function submit_data (event) {
         }
     });
 }
-
-
-var bowlerWickets = 0, bowlerRuns = 0, bowlerExtras = 0, bowlerBalls = 0
-
-$('.bowler_runs').each(function() {
-    bowlerRuns += parseFloat($(this).text());
-});
-
-$('.bowler_wickets').each(function() {
-    bowlerWickets += parseFloat($(this).text());
-});
-
-$('.bowler_extras').each(function() {
-    bowlerExtras += parseFloat($(this).text());
-});
-
-$('.bowler_balls').each(function() {
-    bowlerBalls += parseFloat($(this).text());
-});
-
-$('#bowler_table tbody').append(
-    $('<tr>').css("font-weight","bold").append(
-        $('<td>').text('Career'),
-        $('<td>').text(bowlerWickets),
-        $('<td>').text(bowlerRuns),
-        $('<td>').text(bowlerExtras),
-        $('<td>').text(bowlerBalls),
-        $('<td>').text((bowlerRuns/(bowlerBalls/6)).toFixed(2)),
-        $('<td>').text((bowlerRuns/bowlerWickets).toFixed(2)),
-        $('<td>').text((bowlerBalls/bowlerWickets).toFixed(2))
-    ),
-);

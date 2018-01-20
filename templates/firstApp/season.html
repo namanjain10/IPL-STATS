@@ -1,274 +1,263 @@
 {% extends "firstApp/index.html" %}
 {% block content %}
 
-<div class="dropdown" style = "float : right">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuSeason" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style = "background-color : rgba(230, 227, 201, 0.51)">
-        Select Season
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="/season/1/">2008</a></li>
-        <li><a href="/season/2/">2009</a></li>
-        <li><a href="/season/3/">2010</a></li>
-        <li><a href="/season/4/">2011</a></li>
-        <li><a href="/season/5/">2012</a></li>
-        <li><a href="/season/6/">2013</a></li>
-        <li><a href="/season/7/">2014</a></li>
-        <li><a href="/season/8/">2015</a></li>
-        <li><a href="/season/9/">2016</a></li>
-    </ul>
-</div>
+<div class="row">
 
-<div class="left-nav">
-    <ul class="nav nav-pills nav-stacked col-md-2" style = "padding-top : 20px; padding-right : 15px">
-        <li role="presentation" class="showSingle active" target = "1"><a href="#">Schedule</a></li>
-        <li role="presentation" class="showSingle" target = "2"><a href="#">Most Runs</a></li>
-        <li role="presentation" class="showSingle" target = "3"><a href="#">Highest Score Batsman</a></li>
-        <li role="presentation" class="showSingle" target = "4"><a href="#">Most Sixes</a></li>
-        <li role="presentation" class="showSingle" target = "5"><a href="#">Most Fours</a></li>
-        <li role="presentation" class="showSingle" target = "6"><a href="#">Highest Strike Rate</a></li>
-        <li role="presentation" class="showSingle" target = "7"><a href="#">Most Fifties</a></li>
-        <li role="presentation" class="showSingle" target = "8"><a href="#">Most Hundreds</a></li>
-        <li role="presentation" class="showSingle" target = "9"><a href="#">Most Fours Innings</a></li>
-        <li role="presentation" class="showSingle" target = "10"><a href="#">Most Sixes Innings</a></li>
-    </ul>
+    <div class="col-md-2 left-nav ">
+        <ul class="nav nav-pills nav-stacked affix">
+            <li role="presentation" class="showSingle active" target = "1"><a href="#">Schedule</a></li>
+            <li role="presentation" class="showSingle" target = "2"><a href="#">Most Runs</a></li>
+            <li role="presentation" class="showSingle" target = "3"><a href="#">Highest Score Batsman</a></li>
+            <li role="presentation" class="showSingle" target = "4"><a href="#">Most Sixes</a></li>
+            <li role="presentation" class="showSingle" target = "5"><a href="#">Most Fours</a></li>
+            <li role="presentation" class="showSingle" target = "6"><a href="#">Highest Strike Rate</a></li>
+            <li role="presentation" class="showSingle" target = "7"><a href="#">Most Fifties</a></li>
+            <li role="presentation" class="showSingle" target = "8"><a href="#">Most Hundreds</a></li>
+            <li role="presentation" class="showSingle" target = "9"><a href="#">Most Fours Innings</a></li>
+            <li role="presentation" class="showSingle" target = "10"><a href="#">Most Sixes Innings</a></li>
+        </ul>
+    </div>
 
-</div>
-<div class : "col-md-10" >
-    <h1 style="text-align : center">YEAR - {{year}}</h1>
-</div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <ul class="nav nav-pills" style="vertical-align:center" id = "season_nav">
+                    <li role="presentation" class="show" target="1"><a href="/season/1/">2008</a></li>
+                    <li role="presentation" class="show" target="2"><a href="/season/2/">2009</a></li>
+                    <li role="presentation" class="show" target="3"><a href="/season/3/">2010</a></li>
+                    <li role="presentation" class="show" target="4"><a href="/season/4/">2011</a></li>
+                    <li role="presentation" class="show" target="5"><a href="/season/5/">2012</a></li>
+                    <li role="presentation" class="show" target="6"><a href="/season/6/">2013</a></li>
+                    <li role="presentation" class="show" target="7"><a href="/season/7/">2014</a></li>
+                    <li role="presentation" class="show" target="8"><a href="/season/8/">2015</a></li>
+                    <li role="presentation" class="show" target="9"><a href="/season/9/">2016</a></li>
+                </ul>
+            </div>
+        </div>
 
-<div class = "season_table" id="div1">
-    <h2>Schedule</h2>
-    <div class="table-responsive">
+        <div class = "season_table" id="div1">
+            <div class="table-responsive">
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td class="col-md-2"><strong>Match Date</strong></td>
+                        <td class="col-md-2"><strong>Home Team</strong></td>
+                        <td class="col-md-2"><strong>Visiting Team</strong></td>
+                        <td class="col-md-3"><strong>Venue</strong></td>
+                        <td><strong>City</strong></td>
+                        <td><strong>Country</strong></td>
+                    </thead>
+                    <tbody>
+                        {%for p in match_details %}
+                        <tr>
+                            <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
+                            <td>{{p.Team_Name_Id}}</td>
+                            <td>{{p.Opponent_Team_Id}}</td>
+                            <td>{{p.Venue_Name}}</td>
+                            <td>{{p.City_Name}}</td>
+                            <td>{{p.Host_Country}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td class="col-md-2"><strong>Match Date</strong></td>
-                <td class="col-md-2"><strong>Home Team</strong></td>
-                <td class="col-md-2"><strong>Visiting Team</strong></td>
-                <td class="col-md-3"><strong>Venue</strong></td>
-                <td><strong>City</strong></td>
-                <td><strong>Country</strong></td>
-            </thead>
-            <tbody>
-                {%for p in match_details %}
-                <tr>
-                    <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
-                    <td>{{p.Team_Name_Id}}</td>
-                    <td>{{p.Opponent_Team_Id}}</td>
-                    <td>{{p.Venue_Name}}</td>
-                    <td>{{p.City_Name}}</td>
-                    <td>{{p.Host_Country}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class = "season_table" id="div2" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Runs</strong></td>
+                    </thead>
+                    <tbody>
+                        {%for p in runs %}
+                        <tr>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.runs}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div3" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Match Id</strong></td>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Score</strong></td>
+                    </thead>
+                    <tbody>
+                        {%for p in highest %}
+                        <tr>
+                            <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
+                            <td><a href="/player/{{p.player_id}}">{{p.player_name}}</a></td>
+                            <td>{{p.highest}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div4" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Sixes</strong></td>
+
+                    </thead>
+                    <tbody>
+                        {%for p in six %}
+                        <tr>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.sixes}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div5" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Fours</strong></td>
+
+                    </thead>
+                    <tbody>
+                        {%for p in four %}
+                        <tr>
+                            <td class="col-md-4"><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td class="col-md-2">{{p.sixes}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div6" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Runs</strong></td>
+                        <td><strong>Balls</strong></td>
+                        <td><strong>Strike Rate</strong></td>
+                    </thead>
+                    <tbody>
+                        {%for p in strike %}
+                        <tr>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.runs}}</td>
+                            <td>{{p.balls}}</td>
+                            <td>{{p.str}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div7" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Runs</strong></td>
+                    </thead>
+                    <tbody>
+                        {%for p in fifty %}
+                        <tr>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.fifty}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div8" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Hundred</strong></td>
+
+                    </thead>
+                    <tbody>
+                        {%for p in hundred %}
+                        <tr>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.fifty}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div9" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Match Date</strong></td>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Fours</strong></td>
+
+                    </thead>
+                    <tbody>
+                        {%for p in four_innings %}
+                        <tr>
+                            <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.fours}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class = "season_table" id="div10" style="display : none">
+            <div class="table-responsive">
+
+                <table class = "table table-striped table-bordered table-hover">
+                    <thead>
+                        <td><strong>Match Date</strong></td>
+                        <td><strong>Player Name</strong></td>
+                        <td><strong>Sixes</strong></td>
+
+                    </thead>
+                    <tbody>
+                        {%for p in six_innings %}
+                        <tr>
+                            <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
+                            <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
+                            <td>{{p.fours}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class = "season_table" id="div2" style="display : none">
-    <h2>Most Runs</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Runs</strong></td>
-            </thead>
-            <tbody>
-                {%for p in runs %}
-                <tr>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.runs}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div3" style="display : none">
-    <h2>Highest Score in an Innings</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Match Id</strong></td>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Score</strong></td>
-            </thead>
-            <tbody>
-                {%for p in highest %}
-                <tr>
-                    <td><a href="/match/{{p.Match_Id}}">{{p.Match_Date}}</a></td>
-                    <td><a href="/player/{{p.player_id}}">{{p.player_name}}</a></td>
-                    <td>{{p.highest}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div4" style="display : none">
-    <h2>Most Sixes</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Sixes</strong></td>
-
-            </thead>
-            <tbody>
-                {%for p in six %}
-                <tr>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.sixes}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div5" style="display : none">
-    <h2>Most Fours</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Fours</strong></td>
-
-            </thead>
-            <tbody>
-                {%for p in four %}
-                <tr>
-                    <td class="col-md-4"><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td class="col-md-2">{{p.sixes}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div6" style="display : none">
-    <h2>Best Strike Rate</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Runs</strong></td>
-                <td><strong>Balls</strong></td>
-                <td><strong>Strike Rate</strong></td>
-            </thead>
-            <tbody>
-                {%for p in strike %}
-                <tr>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.runs}}</td>
-                    <td>{{p.balls}}</td>
-                    <td>{{p.str}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div7" style="display : none">
-    <h2>Most Fifties</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Runs</strong></td>
-            </thead>
-            <tbody>
-                {%for p in fifty %}
-                <tr>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.fifty}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div8" style="display : none">
-    <h2>Most Hundreds</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Hundred</strong></td>
-
-            </thead>
-            <tbody>
-                {%for p in hundred %}
-                <tr>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.fifty}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div9" style="display : none">
-    <h2>Most Fours in an Innings</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Match Date</strong></td>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Fours</strong></td>
-
-            </thead>
-            <tbody>
-                {%for p in four_innings %}
-                <tr>
-                    <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.fours}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class = "season_table" id="div10" style="display : none">
-    <h2>Most Sixes in an Innings</h2>
-    <div class="table-responsive">
-
-        <table class = "table table-striped table-bordered table-hover">
-            <thead>
-                <td><strong>Match Date</strong></td>
-                <td><strong>Player Name</strong></td>
-                <td><strong>Sixes</strong></td>
-
-            </thead>
-            <tbody>
-                {%for p in six_innings %}
-                <tr>
-                    <td><a href="/match/{{p.match_id}}">{{p.match_date}}</a></td>
-                    <td><a href="/player/{{p.striker_id}}">{{p.Player_Name}}</a></td>
-                    <td>{{p.fours}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
 
 {% endblock content %}

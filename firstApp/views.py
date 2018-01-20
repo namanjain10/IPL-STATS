@@ -27,7 +27,9 @@ def myconverter(o):
 
 def index (request):
     cursor = connection.cursor()
-    return render(request,'firstApp/index.html')
+    cursor.execute(partnership.format(1,2))
+    part = dictfetchall(cursor)
+    return render(request,'firstApp/index.html',{'part':part})
 
 def testApiView(request) :
     return render(request, 'firstApp/api.html')
@@ -110,33 +112,18 @@ class playerView (View) :
         for i in range (len(score)) :
             for j in range (len(fifty)) :
                 if score[i]['season_id'] == fifty[j]['Season_Id'] :
-                    if fifty[j]['hundreds'] == None :
-                        fifty[j]['hundreds'] = 0
-
                     score[i]['fifty'] = fifty[j]['hundreds']
                     break
 
             for j in range (len(hundred)) :
                 if score[i]['season_id'] == hundred[j]['Season_Id'] :
-                    if hundred[j]['hundreds'] == None :
-                        hundred[j]['hundreds'] = 0
-
                     score[i]['hundred'] = hundred[j]['hundreds']
                     break
 
             for j in range (len(highest)) :
                 if score[i]['season_id'] == highest[j]['Season_Id'] :
-                    if highest[j]['highest'] == None :
-                        highest[j]['highest'] = 0
                     score[i]['highest'] = highest[j]['highest']
                     break
-
-        for i in range (len(score)) :
-            if score[i]['Fours'] == None :
-                score[i]['Fours'] = 0
-
-            if score[i]['Sixes'] == None :
-                score[i]['Sixes'] = 0
 
         context = {'player' : player, 'score' : score, 'bowling':bowling}
         return render(request, "firstApp/player.html", context)

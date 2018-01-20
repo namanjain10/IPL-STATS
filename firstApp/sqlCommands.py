@@ -48,7 +48,7 @@ match_bowl_str = '''SELECT h.innings_id, h.bowler_id, player_name, overs, balls,
                 where dissimal_type != ''
                 group by bowler_id, innings_id ) as r on (r.bowler_id = h.bowler_id and r.innings_id = h.innings_id) '''
 
-player_season = '''SELECT season_id, count(*) as Innings, sum(runs) as Runs, sum(balls)as Balls, sum(fours) as Fours, sum(sixes) as Sixes, round(cast(sum(runs) as float)/sum(balls) * 100, 2) as strike, count(outs) as Outs
+player_season = '''SELECT season_id, coalesce(count(*),0) as Innings, coalesce(sum(runs),0) as Runs, coalesce(sum(balls),0) as Balls, coalesce(sum(fours),0) as Fours, coalesce(sum(sixes),0) as Sixes, round(cast(sum(runs) as float)/sum(balls) * 100, 2) as strike, coalesce(count(outs),0) as Outs
     from (select four.match_id, season_id, runs, balls, outs, fours,sixes, str
     from (select foo.match_id, season_id, runs, balls, outs, fours, str
     from (select naman.season_id, naman.match_id, runs, balls, outs, str
@@ -73,7 +73,7 @@ player_season = '''SELECT season_id, count(*) as Innings, sum(runs) as Runs, sum
     group by match_id) as sixes on four.match_id = sixes.match_id)as total
     group by season_id'''
 
-fifty_season_player = '''SELECT firstApp_season.season_id, hundreds
+fifty_season_player = '''SELECT firstApp_season.season_id, coalesce(hundreds,0) as hundreds
     from firstApp_season left join (select season_id, count(*) as hundreds
     from (select match_id, sum(batsman_scored) as runs
     from firstApp_ball_by_ball
@@ -82,7 +82,7 @@ fifty_season_player = '''SELECT firstApp_season.season_id, hundreds
     having sum(batsman_scored) between %d and %d)as foo join firstApp_match on foo.match_id = firstApp_match.match_id
     group by season_id) as food on food.season_id = firstApp_season.season_id'''
 
-highest_season = '''SELECT firstApp_season.season_id, highest
+highest_season = '''SELECT firstApp_season.season_id, coalesce(highest,0) as highest
     from firstApp_season left join (select season_id, max(runs) as highest
     from (select match_id, sum(batsman_scored) as runs
     from firstApp_ball_by_ball
@@ -208,21 +208,33 @@ four_innings_season = '''SELECT striker_id, player_name, fours, match_id, match_
     limit 50'''
 
 
-partnership = '''SELECT coalesce(fo.match_id, od.match_id) as match_id, coalesce(runs1,0) as runs1 , coalesce(extras1,0) as extras1, coalesce(balls1,0) as balls1, coalesce(runs2,0) as runs2, coalesce(extras2,0) as extras2, coalesce(balls2,0) as balls2
-    from (select match_id, sum(batsman_scored) as runs1, count(*) as balls1, sum(extra_runs) as extras1
+partnership = '''SELECT match_id, coalesce(run1,0) as run1, coalesce(run2,0) as run2, coalesce(extra1,0) as extra1, coalesce(extra2,0) as extra2
+    from
+    ((select foo2.match_id, run1, run2, extra1, extra2
+    from(select match_id, sum(batsman_scored) as run2, sum(extra_runs) as extra2
     from firstApp_ball_by_ball
-    where (striker_id = 1 and non_striker_id = 2)
-    group by match_id) as fo
-
-    full outer join
-
-    (select match_id, sum(batsman_scored) as runs2, count(*) as balls2, sum(extra_runs) as extras2
+    where striker_id = {1} and non_striker_id = {0}
+    group by match_id) as foo2 left join (select match_id, sum(batsman_scored) as run1, sum(extra_runs) as extra1
     from firstApp_ball_by_ball
-    where (striker_id = 2 and non_striker_id = 1)
-    group by match_id) as od on fo.match_id= od.match_id;'''
+    where striker_id = {0} and non_striker_id = {1}
+    group by match_id) as foo1 on foo1.match_id = foo2.match_id
+
+    union
+
+    select foo1.match_id, run1, run2, extra1, extra2
+    from (select match_id, sum(batsman_scored) as run1, sum(extra_runs) as extra1
+    from firstApp_ball_by_ball
+    where striker_id = {0} and non_striker_id = {1}
+    group by match_id) as foo1 left join
+    (select match_id, sum(batsman_scored) as run2, sum(extra_runs) as extra2
+    from firstApp_ball_by_ball
+    where striker_id = {1} and non_striker_id = {0}
+    group by match_id) as foo2 on foo1.match_id = foo2.match_id)
+    ) as food
+    order by match_id'''
 
 
-season_bowling = '''SELECT food.season_id, runs, extra, wickets, balls
+season_bowling = '''SELECT food.season_id, coalesce(runs,0) as runs, coalesce(extra,0) as extra, coalesce(wickets,0) as wickets, coalesce(balls,0) as balls
 from (SELECT season_id, sum(runs) as runs, sum(extra) as extra, sum(balls) as balls
     from (select bow.match_id, runs, extra, match_date, balls
     from (select d.match_id, match_date, sum(batsman_scored) as runs, coalesce(sum (extra_runs),0)as extra
