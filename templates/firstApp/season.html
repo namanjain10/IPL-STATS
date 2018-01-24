@@ -1,4 +1,6 @@
 {% extends "firstApp/index.html" %}
+{% load staticfiles %}
+
 {% block content %}
 
 <div class="row">
@@ -258,6 +260,8 @@
         </div>
     </div>
 </div>
-
-
 {% endblock content %}
+
+{% block js%}
+<script type="text/javascript" src ="{% static "js/season.js" %}"></script>
+{% endblock js%}

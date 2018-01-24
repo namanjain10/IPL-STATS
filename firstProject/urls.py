@@ -36,7 +36,6 @@ urlpatterns = [
     url(r'^team-season/(?P<id>\d+)/$', views.teamSeasonView.as_view()),
     url(r'^help/', views.test.as_view()),
     url(r'^player-home/', views.PlayerHome.as_view()),
-    url(r'^season-home/', views.SeasonHome.as_view()),
     url(r'^mom/', views.manOfTheMatchView.as_view()),
     url(r'^captain/', views.captainView.as_view()),
     url(r'^all-players/', views.allPlayersView.as_view()),

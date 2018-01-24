@@ -1,5 +1,5 @@
 test_str = ''' SELECT match_id, match_date, team_name_id, opponent_team_id, venue_name, city_name, host_country
-                from firstApp_match where season_id = %d order by match_date'''
+from firstApp_match where season_id = %d order by match_date'''
 
 match_bowl_str = '''SELECT h.innings_id, h.bowler_id, player_name, overs, balls, runs, econ, wickets
                 from (select q.innings_id, q.bowler_id, player_name, overs, balls, runs, round(cast(runs as float)/(overs*6 + balls)*6,2) as econ

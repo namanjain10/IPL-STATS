@@ -1,4 +1,6 @@
 {% extends "firstApp/index.html" %}
+{% load staticfiles %}
+
 {% block content %}
 
 <div class="table-responsive">
@@ -39,5 +41,8 @@
 <div class="table-responsive" id = "all_players">
 
 </div>
-
 {% endblock content %}
+
+{% block js%}
+<script type="text/javascript" src ="{% static "js/all_players.js" %}"></script>
+{% endblock js%}

@@ -1,5 +1,6 @@
-
 {% extends "firstApp/index.html" %}
+{% load staticfiles %}
+
 {% block content %}
 <div class="container">
     <h1>{{name}}</h1>
@@ -28,3 +29,7 @@
     </div>
 </div>
 {% endblock content %}
+
+{% block js%}
+<script type="text/javascript" src ="{% static "js/team.js" %}"></script>
+{% endblock js%}

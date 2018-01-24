@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Sum
 from django.db import connection
 from django.views import View
+from django.db.models import Q
 from .models import Ball_by_Ball, Match, Player, Player_Match, Season, Team
 #from .serializer import PlayerSerializer
 from rest_framework import status
@@ -21,6 +22,7 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
+
 def myconverter(o):
     if isinstance(o, date):
         return o.__str__()
@@ -33,12 +35,6 @@ def index (request):
 
 def testApiView(request) :
     return render(request, 'firstApp/api.html')
-
-class SeasonHome (View) :
-    def get(self, request) :
-        query = Season.objects.all().values()
-        dic = [i for i in query]
-        return render (request, 'firstApp/season_home.html', {'season' : dic})
 
 class SuperoverView (View) :
 
@@ -68,10 +64,6 @@ class playerViewApi(APIView) :
         group by striker_id, player_name
         ''' %(int(request.GET['match_id']), int(request.GET['match_id'])))
 
-        # cursor.execute(''' SELECT player_in, player_name, batting_hand
-        # from firstApp_player
-        # ''')
-
         pl = dictfetchall(cursor)
         return HttpResponse(json.dumps(pl))
         # serializer = PlayerSerializer(pl, many = True)
@@ -84,9 +76,10 @@ class playerView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
         cursor = connection.cursor()
-        cursor.execute('''SELECT * from firstApp_player where player_id = %d''' % int(player_id))
-        player = dictfetchall(cursor)
-
+        
+        query = Player.objects.filter(Player_Id = player_id).values()
+        player = [i for i in query]
+        
         player[0]['age_years'] = relativedelta(date.today(),player[0]['DOB']).years
         player[0]['age_months'] = relativedelta(date.today(),player[0]['DOB']).months
         player[0]['age_days'] = relativedelta(date.today(),player[0]['DOB']).days
@@ -134,9 +127,8 @@ class matchView (View) :
         match_id = kwargs['id']
         cursor = connection.cursor()
 
-        cursor.execute(''' SELECT * from firstApp_match where match_id = %d''' %int(match_id))
-
-        match_details = dictfetchall(cursor)
+        query = Match.objects.filter(Match_Id = match_id).values()
+        match_details = [i for i in query]
 
         for i in ('Match_Winner_Id','Team_Name_Id','Opponent_Team_Id','Toss_Winner_Id') :
             match_details[0][i] = (Team.objects.filter(Team_Id = match_details[0][i]).values('Team_Name')[0]['Team_Name'])
@@ -169,12 +161,9 @@ class matchView (View) :
             batting[i]['four'] = four[0]['four']
             batting[i]['six'] = six[0]['six']
 
-            cursor.execute('''SELECT *
-            from firstApp_ball_by_ball
-            where match_id = %d and player_dissimal_id = %d''' % (int(match_id), int(batting[i]['Striker_Id'])))
-
-            outs = dictfetchall(cursor)
-
+            query = Ball_by_Ball.objects.filter(Match_Id = match_id, Player_dissimal_Id = batting[i]['Striker_Id']).values()
+            outs = [i for i in query]
+            
             if len(outs) == 0 :
                 batting[i]['dissimal_type'] = None
 
@@ -330,10 +319,9 @@ class seasonView (View) :
 
         cursor = connection.cursor()
 
-        cursor.execute(''' SELECT match_id, match_date, team_name_id, opponent_team_id, venue_name, city_name, host_country from firstApp_match where season_id = %d order by match_date''' %int(season_id))
-
-        match_details = dictfetchall(cursor)
-
+        dic = Match.objects.filter(Season_Id = season_id).order_by('Match_Date').values()
+        match_details = [i for i in dic]
+        
         for j in range (len(match_details)) :
             for i in ('Team_Name_Id','Opponent_Team_Id') :
                 match_details[j][i] = (Team.objects.filter(Team_Id = match_details[j][i]).values('Team_Name')[0]['Team_Name'])
@@ -401,6 +389,10 @@ class TeamView (View) :
         cursor = connection.cursor()
 
         cursor.execute(wins.format(int(team_id)))
+        
+        # query = Match.objects.filter(Q(Team_Id = team_id) | Q(Opponent_Team_Id = team_id), Match_Winner_Id = team_id).values()
+
+        # win = [i for i in query]
         win = dictfetchall(cursor)
 
         cursor.execute(losses.format(int(team_id)))
@@ -452,10 +444,11 @@ class TeamView (View) :
 class wicketsMatchView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
-        cursor = connection.cursor()
+        
         name = Player.objects.filter(Player_Id = int(player_id)).get()
         name = name.Player_Name
-
+        
+        cursor = connection.cursor()
         cursor.execute(per_match_bowling.format(int(player_id)))
         bowl = dictfetchall(cursor)
         return render (request, 'firstApp/wickets_per_match.html', {'bowl': bowl, 'name':name})

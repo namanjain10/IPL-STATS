@@ -12,7 +12,7 @@ function player(event) {
             type: "GET",
             success: function(response){
 
-                list = $("<ul class='dropdown-menu' style='height: auto;max-height: 400px;    overflow-x: hidden;'></ul>");
+                list = $("<ul class='dropdown-menu' id='dropdownMenu1'></ul>");
                 if (response.length == 2) {
                     var tr = $('<li>').text(" No such Player!!! Try his surname !!")
                     tr.appendTo(list);
@@ -20,8 +20,9 @@ function player(event) {
                 else {
                     response = $.parseJSON(response);
                     $.each(response, function(i, item) {
-                        //var tr = $('<li>').html("<a href='"+h+"'> "+ item.Player_Name + "</a>"),
-                        var tr = $('<li class = "col-md-8">').text(item.Player_Name)
+                        h = '/player/' + item.Player_Id + '/'
+                        var tr = $('<li class = "col-md-8">').html("<a href='"+h+"'> "+ item.Player_Name + "</a>")
+                        //var tr = $('<li class = "col-md-8">').text(item.Player_Name)
                         tr.appendTo(list);
                     });
                 }
