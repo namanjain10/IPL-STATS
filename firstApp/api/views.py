@@ -4,15 +4,13 @@ from rest_framework.response import Response
 import json
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.db import connection
-from django.views import View
 from django.db.models import Q
 from firstApp.models import Ball_by_Ball, Match, Player, Player_Match, Season, Team
 #from .serializer import PlayerSerializer
 from datetime import date
 from dateutil.relativedelta import relativedelta
-from firstApp.google_image import get_image_link
 from firstApp.sqlCommands import *
 
 def dictfetchall(cursor):
@@ -26,7 +24,6 @@ def dictfetchall(cursor):
 def myconverter(o):
     if isinstance(o, date):
         return o.__str__()
-
 
 class playerViewApi(APIView) :
 
@@ -66,12 +63,10 @@ class allPlayersApi (APIView) :
         res = json.dumps(dic, default=myconverter)
         return Response(res)
 
-
 class seasonApi (APIView) :
     def get (self, request, *args, **kwargs) :
         season_id = kwargs['id']
         request.GET['category']
-
 
 class PlayerSearchApi (APIView) :
     
@@ -82,6 +77,47 @@ class PlayerSearchApi (APIView) :
         res = json.dumps(dic, default=myconverter)
         return Response(res)
 
+
+class PlayerCompareApi(APIView):
+
+	def fours (self,id,val) :
+		return Ball_by_Ball.objects.filter(Striker_Id = id, Batsman_Scored = val).count()
+
+	def runs (self,id) :
+		return Ball_by_Ball.objects.filter(Striker_Id = id).aggregate(Sum('Batsman_Scored')).get('Batsman_Scored__sum')
+
+	def matches (self,id) :
+		return Player_Match.objects.filter(Player_Id = id).count()
+
+	def wickets (self,id) :
+		return Ball_by_Ball.objects.filter(Bowler_Id = id).exclude(Dissimal_Type = 'runout').aggregate(Count('Player_dissimal_Id')).get('Player_dissimal_Id__count')
+
+	def catches (self,id) :
+		return Ball_by_Ball.objects.filter(Fielder_Id = id).exclude(Dissimal_Type = 'runout').count()
+
+	def get (self, request):
+
+		player_id1 = Player.objects.filter(Player_Name__iexact = request.GET['player_name_1']).values().first()
+		player_id2 = Player.objects.filter(Player_Name__iexact = request.GET['player_name_2']).values().first()
+
+		player_id1['matches'] = self.matches(player_id1['Player_Id'])
+		player_id2['matches'] = self.matches(player_id2['Player_Id'])
+		player_id1['runs'] = self.runs(player_id1['Player_Id'])
+		player_id2['runs'] = self.runs(player_id2['Player_Id'])
+		player_id1['wickets'] = self.wickets(player_id1['Player_Id'])
+		player_id2['wickets'] = self.wickets(player_id2['Player_Id'])
+		player_id1['catches'] = self.catches(player_id1['Player_Id'])
+		player_id2['catches'] = self.catches(player_id2['Player_Id'])
+		player_id1['fours'] = self.fours(player_id1['Player_Id'],4)
+		player_id2['fours'] = self.fours(player_id2['Player_Id'],4)
+		player_id1['sixes'] = self.fours(player_id1['Player_Id'],6)
+		player_id2['sixes'] = self.fours(player_id2['Player_Id'],6)
+
+		dic = [{'player1' : player_id1, 'player2' : player_id2}]
+
+		res = json.dumps(dic, default=myconverter)
+		return Response(res)
+		
 class playerStatsApi(APIView):
     
     def get (self,request) :

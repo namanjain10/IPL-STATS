@@ -6,7 +6,6 @@ from django.views import View
 from django.db.models import Q
 from .models import Ball_by_Ball, Match, Player, Player_Match, Season, Team
 #from .serializer import PlayerSerializer
-
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from .google_image import get_image_link
@@ -19,10 +18,6 @@ def dictfetchall(cursor):
         dict(zip(columns, row))
         for row in cursor.fetchall()
     ]
-
-def myconverter(o):
-    if isinstance(o, date):
-        return o.__str__()
 
 def index (request):
     cursor = connection.cursor()
@@ -43,11 +38,8 @@ class SuperoverView (View) :
         where innings_id = 3 or innings_id = 4
         group by firstApp_match.match_id, match_date
         ''')
-
         superover = dictfetchall(cursor)
         return render (request, 'firstApp/superover.html', {'superover':superover} )
-
-
 
 class playerView (View) :
     def get (self, request, *args, **kwargs) :
@@ -394,14 +386,11 @@ class wicketsMatchView (View) :
         return render (request, 'firstApp/wickets_per_match.html', {'bowl': bowl, 'name':name})
 
 class test (View) :
-
     def get (self, request, *args, **kwargs) :
         cursor = connection.cursor()
         # cursor.execute(test_str %2)
         q = Match.objects.raw('''SELECT * from firstApp_match''')
         pl = q
-        #pl = dictfetchall(cursor)
-        #print (len(pl[0]['Dissimal_Type']), 'namaan')
         context = {'batting' : pl}#, 'bowling' : bowling}
         return render(request, "firstApp/help.html", context)
 

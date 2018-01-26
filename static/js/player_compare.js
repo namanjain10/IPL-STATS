@@ -43,15 +43,73 @@ $("#search_box2").on('click','li',function() {
 });
 
 
-$.ajax({url: "http://127.0.0.1:8000/api/player-stats-api",
-    data: {'name' : $(this).text()},
-    cache: false,
-    type: "GET",
-    success: function(response){
-         response = $.parseJSON(response);
+function compare () {
+    $.ajax({url: "http://127.0.0.1:8000/api/player-compare-api",
+        data: {'player_name_1' : $("#search1").val(), 'player_name_2' : $("#search2").val()},
+        cache: false,
+        type: "GET",
+        success: function(response){
+            response = $.parseJSON(response);
+            
             $.each(response, function(i, item) {
-                var w = $('<tr>').append($("<td>").html('<img src =' + item.url+ ' width = "30%" height = "30%" >'));
-                $('tbody').append(w);
+                var p = $('<tr>').append(
+                            '<td><a href = "/player/' + item.player1.Player_Id+ '"><img src = "' + item.player1.url + '" height = "150px" width = "170px"></a></td>',
+                            $('<td>').text(''),
+                            '<td><a href = "/player/' + item.player2.Player_Id+ '"><img src = "' + item.player2.url + '" height = "150px" width = "170px"></a></td>',
+                        );
+                var q = $('<tr>').append(
+                            $('<td>').text(item.player1.Batting_Hand),
+                            $('<td>').css("font-weight","bold").text('Batting Hand'),
+                            $('<td>').text(item.player2.Batting_Hand),
+                        );
+                var r = $('<tr>').append(
+                            $('<td>').text(item.player1.Bowling_Skill),
+                            $('<td>').css("font-weight","bold").text('Bowling Skill'),
+                            $('<td>').text(item.player2.Bowling_Skill),
+                        );
+                var s = $('<tr>').append(
+                            $('<td>').text(item.player1.matches),
+                            $('<td>').css("font-weight","bold").text('Matches'),
+                            $('<td>').text(item.player2.matches),
+                        );
+                var t = $('<tr>').append(
+                            $('<td>').text(item.player1.runs),
+                            $('<td>').css("font-weight","bold").text('Runs Scored'),
+                            $('<td>').text(item.player2.runs),
+                        );
+                var u = $('<tr>').append(
+                            $('<td>').text(item.player1.wickets),
+                            $('<td>').css("font-weight","bold").text('Wickets'),
+                            $('<td>').text(item.player2.wickets),
+                        );
+                var v = $('<tr>').append(
+                            $('<td>').text(item.player1.catches),
+                            $('<td>').css("font-weight","bold").text('Catches'),
+                            $('<td>').text(item.player2.catches),
+                        );
+                var w = $('<tr>').append(
+                            $('<td>').text(item.player1.fours),
+                            $('<td>').css("font-weight","bold").text('4s'),
+                            $('<td>').text(item.player2.fours),
+                        );
+                var x = $('<tr>').append(
+                            $('<td>').text(item.player1.sixes),
+                            $('<td>').css("font-weight","bold").text('6s'),
+                            $('<td>').text(item.player2.sixes),
+                        );
+                var y = $('<tr>').append(
+                            $('<td>').text(item.player1.Country),
+                            $('<td>').css("font-weight","bold").text('Country'),
+                            $('<td>').text(item.player2.Country),
+                        );
+                var z = $('<tr>').append(
+                            $('<td>').append($('<a>').attr("href","/team-season/"+item.player1.Player_Id).text('Teams')),
+                            $('<td>').css("font-weight","bold").text('Teams Played For'),
+                            $('<td>').append($('<a>').attr("href","/team-season/"+item.player2.Player_Id).text('Teams')),
+                        );
+            $('tbody').html([p,y,z,q,r,s,t,w,x,u,v]);
+            
             });
-    }
-});
+        }
+    });    
+}
