@@ -37,7 +37,7 @@
 //});
 
 $(window).ready( function () {
-    $.ajax({url: "http://127.0.0.1:8000/api",
+    $.ajax({url: "http://127.0.0.1:8000/api/api",
         data: {
             "match_id": 419125
         },

@@ -1,50 +1,59 @@
 {% extends "firstApp/index.html" %}
+{%load staticfiles %}
+
 {% block content %}
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="row">
-            <div id = "search_bar">
-                <div class="col-md-3">
-                    <label >Find Player Here</label>
-                </div>
+<h1>Compare Players</h1>
 
+<table class="col-md-12">
+    <thead>
+        <td class = "col-md-5">
+            <div id = "search_bar">
                 <div class="col-md-9">
-                    <input class="form-control" type="search" id="search" name="player" onkeyup="player(event)" placeholder="Search Player Here...">
+                    <input class="form-control" type="search" id="search1" name="player" onkeyup="player(event,1)" placeholder="Search Player Here...">
 
                     <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
 
                     <div class="row col-md-12">
-                        <div class="dropdown" id="search_box" >
+                        <div class="dropdown" id="search_box1" style="width: 100%; margin: 0 auto;">
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <label >Player 1</label>
+                </div>
             </div>
-        </div>
-    </div>
+        </td>
+        <td class = "col-md-2">
+            <button>Yes</button>
+        </td>    
 
-    <div class="col-md-6">
-        <div class="row">
+        <td class = "col-md-5">
             <div id = "search_bar">
                 <div class="col-md-3">
-                    <label >Find Player Here</label>
+                    <label >Player 2</label>
                 </div>
 
                 <div class="col-md-9">
-                    <input class="form-control" type="search" id="search" name="player" onkeyup="player(event)" placeholder="Search Player Here...">
+                    <input class="form-control" type="search" id="search2" name="player" onkeyup="player(event,2)" placeholder="Search Player Here...">
 
                     <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
 
                     <div class="row col-md-12">
-                        <div class="dropdown" id="search_box2" >
+                        <div class="dropdown" id="search_box2" style="width: 100%; margin: 0 auto;">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-</div>
+        </td>
+     </thead>
+     <tbody>
+         
+     </tbody>
+</table>
 
 <br>
 {% endblock content %}
+{% block js%}
+    <script type="text/javascript" src ="{% static "js/player_compare.js" %}"></script>
+{% endblock js%}

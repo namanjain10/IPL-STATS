@@ -1,6 +1,6 @@
 function submit_data (event) {
     event.preventDefault();
-    $.ajax({url: "http://127.0.0.1:8000/all-player-api/",
+    $.ajax({url: "http://127.0.0.1:8000/api/all-player-api/",
         data: {
             "category" : $('[name="category"]').find(":selected").val(),
             "country" : $('[name="country"]').find(":selected").val(),
