@@ -8,7 +8,6 @@ from django.db.models import Sum, Count
 from django.db import connection
 from django.db.models import Q
 from firstApp.models import Ball_by_Ball, Match, Player, Player_Match, Season, Team
-#from .serializer import PlayerSerializer
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from firstApp.sqlCommands import *
@@ -76,7 +75,6 @@ class PlayerSearchApi (APIView) :
 
         res = json.dumps(dic, default=myconverter)
         return Response(res)
-
 
 class PlayerCompareApi(APIView):
 

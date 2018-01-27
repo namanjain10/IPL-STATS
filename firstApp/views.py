@@ -41,6 +41,13 @@ class SuperoverView (View) :
         superover = dictfetchall(cursor)
         return render (request, 'firstApp/superover.html', {'superover':superover} )
 
+class MapView(View):
+    def get (self, request, *args, **kwargs) :
+        a = kwargs['slug'].replace('%20',' ')
+                
+        content = {'st_name' : a}
+        return render (request,"firstApp/maps.html",content)
+
 class playerView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
