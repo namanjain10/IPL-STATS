@@ -1,0 +1,62 @@
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[28/Jan/2018 17:53:05] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 17:53:06] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 17:53:06] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 17:53:29] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 17:53:29] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 17:53:30] "GET /static/js/index.js HTTP/1.1" 404 92
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[28/Jan/2018 17:57:48] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 17:57:48] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 17:57:49] "GET /static/js/index.js HTTP/1.1" 404 92
+System check identified some issues:
+
+WARNINGS:
+?: (urls.W001) Your URL pattern '^$' uses include with a regex ending with a '$'. Remove the dollar from the regex to avoid problems including URLs.
+
+System check identified 1 issue (0 silenced).
+[28/Jan/2018 17:59:29] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 17:59:30] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 17:59:30] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:01:33] "GET /compare/ HTTP/1.1" 200 3538
+[28/Jan/2018 18:01:34] "GET /static/js/player_compare.js HTTP/1.1" 404 101
+[28/Jan/2018 18:01:34] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 18:01:35] "GET /static/js/player_compare.js HTTP/1.1" 404 101
+[28/Jan/2018 18:12:39] "GET /favicon.ico HTTP/1.1" 404 85
+[28/Jan/2018 18:16:53] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 18:16:53] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 18:16:53] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:34:10] "GET / HTTP/1.1" 400 26
+[28/Jan/2018 18:34:11] "GET /favicon.ico HTTP/1.1" 400 26
+[28/Jan/2018 18:35:16] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 18:35:16] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 18:35:16] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:35:17] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:35:22] "GET /favicon.ico HTTP/1.1" 404 85
+[28/Jan/2018 18:44:13] "GET /robots.txt HTTP/1.1" 404 84
+[28/Jan/2018 18:44:13] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 18:44:13] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 18:44:14] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:44:15] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:44:32] "GET /favicon.ico HTTP/1.1" 404 85
+[28/Jan/2018 18:46:55] "GET /robots.txt HTTP/1.1" 400 26
+[28/Jan/2018 18:46:55] "GET / HTTP/1.1" 400 26
+[28/Jan/2018 18:46:55] "GET /robots.txt HTTP/1.1" 400 26
+[28/Jan/2018 18:46:55] "GET /favicon.ico HTTP/1.1" 400 26
+[28/Jan/2018 18:47:21] "GET / HTTP/1.1" 200 6094
+[28/Jan/2018 18:47:21] "GET /static/css/index.css HTTP/1.1" 404 94
+[28/Jan/2018 18:47:21] "GET /static/js/index.js HTTP/1.1" 404 92
+[28/Jan/2018 18:48:01] "GET / HTTP/1.1" 400 26
+[28/Jan/2018 18:48:01] "GET /robots.txt HTTP/1.1" 400 26
+[28/Jan/2018 18:48:02] "GET /robots.txt HTTP/1.1" 400 26
+[28/Jan/2018 18:48:02] "GET /favicon.ico HTTP/1.1" 400 26
