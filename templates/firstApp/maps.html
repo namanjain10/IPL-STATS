@@ -1,16 +1,16 @@
 {% extends "firstApp/index.html" %}
 {% load staticfiles %}
 
-{% block content %} 
-    
-    <h3 class= "head_name">{{st_name}} </h3>
+{% block content %}
+
+    <h3 class= "head_name" style = "text-align : center">{{st_name}} </h3>
     <br>
     <div id="map" style= "height: 400px; width: 100%;border: 2px black solid; ">
-            
+
     </div>
 
     {% endblock content %}
-    {% block inbody%} 
+    {% block inbody%}
     <script type="text/javascript" src ="{% static "js/maps.js" %}"></script>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0OIfafXFF64wVg13fkhg51YPBynpmERo&callback=initMap">

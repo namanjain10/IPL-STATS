@@ -1,5 +1,5 @@
 function player(event,value) {
-    
+
     if ($('#search'+value).val() === '') {
         $('.dropdown-menu','#search_box'+value).hide();
     }
@@ -50,7 +50,7 @@ function compare () {
         type: "GET",
         success: function(response){
             response = $.parseJSON(response);
-            
+
             $.each(response, function(i, item) {
                 var p = $('<tr>').append(
                             '<td><a href = "/player/' + item.player1.Player_Id+ '"><img src = "' + item.player1.url + '" height = "150px" width = "170px"></a></td>',
@@ -108,8 +108,18 @@ function compare () {
                             $('<td>').append($('<a>').attr("href","/team-season/"+item.player2.Player_Id).text('Teams')),
                         );
             $('tbody').html([p,y,z,q,r,s,t,w,x,u,v]);
-            
+
             });
         }
-    });    
+    });
 }
+
+$("#searchclear1").click(function(){
+    $("#search1").val('');
+    $('.dropdown-menu','#search_box1').hide();
+});
+
+$("#searchclear2").click(function(){
+    $("#search2").val('');
+    $('.dropdown-menu','#search_box2').hide();
+});

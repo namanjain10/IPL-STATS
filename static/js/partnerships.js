@@ -50,7 +50,6 @@ function compare () {
         type: "GET",
         success: function(response){
             response = $.parseJSON(response);
-            console.log(response.length);
 
             var p = $('<tr>').append(
                     '<td><a href = "/player/' + response[0].Player_Id1+ '"><img src = "' + response[0].url1 + '" height = "150px" width = "170px"></a></td>',
@@ -74,19 +73,55 @@ function compare () {
               $.each(response, function(i, item) {
                   var p = $('<tr>').append(
                             '<td><a href = "/match/' + item.match_id + '">' + item.match_id + '</a></td>',
-                            $('<td>').text(item.run1),
-                            $('<td>').text(item.run2),
-                            $('<td>').text(item.extra1 + item.extra2),
-                            $('<td id = "total">').css("font-weight","bold").text(item.run1 + item.run2 + item.extra1 + item.extra2)
+                            $('<td class = "run1">').text(item.run1),
+                            $('<td class = "run2">').text(item.run2,10),
+                            $('<td class = "extra">').text(item.extra1 + item.extra2),
+                            $('<td class = "total">').css("font-weight","bold").text(item.run1 + item.run2 + item.extra1 + item.extra2)
                         );
                     body.append(p);
                 });
 
           $('#part').html([head, body]);
+
+          var TotalRuns = 0, Run1 = 0, Run2 = 0, Extra = 0;
+
+          $('.run1').each(function() {
+              Run1 += parseFloat($(this).text());
+          })
+          $('.run2').each(function() {
+              Run2 += parseFloat($(this).text());
+          })
+          $('.extra').each(function() {
+              Extra += parseFloat($(this).text());
+          })
+          $('.total').each(function() {
+              TotalRuns += parseFloat($(this).text());
+          })
+
+          $('#part tbody').append($('<tr>').append($('<td>').css("font-weight","bold").text('Total'),
+                              $('<td>').css("font-weight","bold").text(Run1 + " (" + Math.round(Run1/TotalRuns * 100,2) + "%)"),
+                              $('<td>').css("font-weight","bold").text(Run2 + " (" + Math.round(Run2/TotalRuns * 100,2) + "%)"),
+                              $('<td>').css("font-weight","bold").text(Extra),
+                              $('<td>').css("font-weight","bold").text(TotalRuns)
+                          ));
+
+          var fixedTable = fixTable(document.getElementById('part'));
+
         }
         else {
-            $('#part').html('<p><strong>No Played Together !!! </strong></p>');
+            $('#part').html('<p><strong>Not Played Together !!!</strong></p>');
         }
+
         }
     });
 }
+
+$("#searchclear1").click(function(){
+    $("#search1").val('');
+    $('.dropdown-menu','#search_box1').hide();
+});
+
+$("#searchclear2").click(function(){
+    $("#search2").val('');
+    $('.dropdown-menu','#search_box2').hide();
+});

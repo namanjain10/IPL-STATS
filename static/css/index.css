@@ -2,8 +2,8 @@ h3 {
     color: rgb(37, 74, 198);
 }
 
-h1 {     
-    color: rgb(75, 6, 150); 
+h1 {
+    color: rgb(75, 6, 150);
 }
 
 h2 {
@@ -55,7 +55,7 @@ body{
     font-size: 18px;
 }
 
-#searchclear {
+#searchclear, #searchclear1, #searchclear2{
     position: absolute;
     right: 15px;
     top: 0;
@@ -80,7 +80,7 @@ body{
 .carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
     min-width: 100%;
     max-width: none;
-    height: 450px;
+    height: 400px;
 }
 
 .carousel-caption {

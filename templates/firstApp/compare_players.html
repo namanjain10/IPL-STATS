@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>Compare Players</h1>
+<h1 style = "text-align : center">Compare Players</h1>
 
 <table class="table table-striped table-bordered table-hover col-md-12" style = "text-align : center">
     <thead>
@@ -12,7 +12,7 @@
                 <div class="col-md-9">
                     <input class="form-control" type="search" id="search1" name="player" onkeyup="player(event,1)" placeholder="Search Player Here...">
 
-                    <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    <span id="searchclear1" class="glyphicon glyphicon-remove-circle"></span>
 
                     <div class="row col-md-12">
                         <div class="dropdown" id="search_box1" style="width: 100%; margin: 0 auto;">
@@ -26,7 +26,7 @@
         </td>
         <td class = "col-md-2" style="padding-top: 55px">
             <button class = "btn btn-default" onclick="compare()" style = "background-color : #337ab7; color : white">Submit</button>
-        </td>    
+        </td>
 
         <td class = "col-md-5">
             <div id = "search_bar">
@@ -37,7 +37,7 @@
                 <div class="col-md-9">
                     <input class="form-control" type="search" id="search2" name="player" onkeyup="player(event,2)" placeholder="Search Player Here...">
 
-                    <span id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    <span id="searchclear2" class="glyphicon glyphicon-remove-circle"></span>
 
                     <div class="row col-md-12">
                         <div class="dropdown" id="search_box2" style="width: 100%; margin: 0 auto;">
@@ -48,7 +48,7 @@
         </td>
      </thead>
      <tbody>
-         
+
      </tbody>
 </table>
 

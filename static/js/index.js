@@ -101,11 +101,6 @@ $(document).ajaxComplete(function () {
     $('<div></div>').appendTo('#player').text('Total : '+ TotalRuns);
 });
 
-$("#searchclear").click(function(){
-    $("#search").val('');
-    $('.dropdown-menu').hide();
-});
-
 window.onerror = function(msg, url, linenumber) {
     alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
     return true;

@@ -32,3 +32,8 @@ function player(event) {
         });
     }
 }
+
+$("#searchclear").click(function(){
+    $("#search").val('');
+    $('.dropdown-menu').hide();
+});
