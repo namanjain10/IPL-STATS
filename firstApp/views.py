@@ -392,14 +392,13 @@ class wicketsMatchView (View) :
         bowl = dictfetchall(cursor)
         return render (request, 'firstApp/wickets_per_match.html', {'bowl': bowl, 'name':name})
 
-class test (View) :
+class Compare (View) :
     def get (self, request, *args, **kwargs) :
-        cursor = connection.cursor()
-        # cursor.execute(test_str %2)
-        q = Match.objects.raw('''SELECT * from firstApp_match''')
-        pl = q
-        context = {'batting' : pl}#, 'bowling' : bowling}
-        return render(request, "firstApp/help.html", context)
+        return render(request, "firstApp/compare_players.html")
+
+class Partnership (View) :
+    def get (self, request, *args, **kwargs) :
+        return render(request, "firstApp/partnerships.html")
 
 class teamSeasonView (View) :
     def get (self, request, *args, **kwargs) :

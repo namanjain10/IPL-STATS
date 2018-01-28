@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^api/', views.playerViewApi.as_view()),
     url(r'^player-name-api/',views.PlayerSearchApi.as_view()),
     url(r'^player-compare-api/', views.PlayerCompareApi.as_view()),
+    url(r'^player-partnership-api/', views.PlayerPartnershipApi.as_view()),
 ]

@@ -68,7 +68,7 @@ class seasonApi (APIView) :
         request.GET['category']
 
 class PlayerSearchApi (APIView) :
-    
+
     def get (self,request) :
         query = Player.objects.filter(Player_Name__contains=request.GET['name']).values()
         dic = [i for i in query]
@@ -115,12 +115,36 @@ class PlayerCompareApi(APIView):
 
 		res = json.dumps(dic, default=myconverter)
 		return Response(res)
-		
+
+class PlayerPartnershipApi(APIView) :
+
+    def get (self, request) :
+
+        player_id1 = Player.objects.filter(Player_Name__iexact = request.GET['player_name_1']).values().first()
+        player_id2 = Player.objects.filter(Player_Name__iexact = request.GET['player_name_2']).values().first()
+
+        cursor = connection.cursor()
+        cursor.execute(partnership.format(player_id1['Player_Id'],player_id2['Player_Id']))
+        part = dictfetchall(cursor)
+
+        try :
+            part[0]['url1'] = player_id1['url']
+            part[0]['url2'] = player_id2['url']
+            part[0]['Player_Id1'] = player_id1['Player_Id']
+            part[0]['Player_Id2'] = player_id2['Player_Id']
+            part[0]['status'] = 0
+
+        except :
+            part.append({'url1' : player_id1['url'], 'url2' : player_id2['url'], 'Player_Id1' : player_id1['Player_Id'], 'Player_Id2' : player_id2['Player_Id'], 'status' : 1})
+
+        res = json.dumps(part, default=myconverter)
+        return Response(res)
+
 class playerStatsApi(APIView):
-    
+
     def get (self,request) :
         query = Player.objects.filter(Player_Name__iexact=request.GET['name']).values()
         dic = [i for i in query]
 
         res = json.dumps(dic, default=myconverter)
-        return Response(res)                        
+        return Response(res)
