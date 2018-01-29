@@ -4,33 +4,37 @@
 
 {% block content %}
 
-<div id = "player_details">
-    {% for p in player %}
-    <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3><br>
-    <h5><strong>Name</strong> : {{p.Player_Name}}</h5>
-    <h5><strong>DOB</strong> : {{p.DOB}}</h5>
-    <h5><strong>Age</strong> : {{p.age_years}} years {{p.age_months}} months {{p.age_days}} days</h5>
-    <h5><strong>Batting Hand</strong> : {{p.Batting_Hand}}</h5>
-    <h5><strong>Bowling Skill</strong> : {{p.Bowling_Skill}}</h5>
+<div class = "row">
 
-    {%endfor%}
-
-    <div style="padding-top : 10px">
+    <div id = "player_details" class = "col-md-8">
         {% for p in player %}
-        <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a><br>
-        <a href="/wickets-match/{{p.Player_Id}}">Per Match Bowling Analysis</a><br>
-        <a href="/team-season/{{p.Player_Id}}">Teams played for per Season</a><br>
+        <h3><strong>{{p.Player_Name}} ({{p.Country}})</strong></h3><br>
+        <h5><strong>Name</strong> : {{p.Player_Name}}</h5>
+        <h5><strong>DOB</strong> : {{p.DOB}}</h5>
+        <h5><strong>Age</strong> : {{p.age_years}} years {{p.age_months}} months {{p.age_days}} days</h5>
+        <h5><strong>Batting Hand</strong> : {{p.Batting_Hand}}</h5>
+        <h5><strong>Bowling Skill</strong> : {{p.Bowling_Skill}}</h5>
 
+        {%endfor%}
+
+        <div style="padding-top : 10px">
+            {% for p in player %}
+            <a href="/runs-match/{{p.Player_Id}}">Per Match Batting Analysis</a><br>
+            <a href="/wickets-match/{{p.Player_Id}}">Per Match Bowling Analysis</a><br>
+            <a href="/team-season/{{p.Player_Id}}">Teams played for per Season</a><br>
+
+            {%endfor%}
+        </div>
+    </div>
+
+    <div id = "player_img" class="col-md-4">
+        {% for p in player %}
+        <img src ="{{p.image_link}}" width="220px" height="200px" class="img-rounded">
         {%endfor%}
     </div>
 </div>
 
-<div id = "player_img">
-    {% for p in player %}
-    <img src ="{{p.image_link}}" width="220px" height="200px" class="img-rounded">
-    {%endfor%}
-</div>
-<div style = "clear: both"></div>
+<!-- <div style = "clear: both"></div> -->
 
 <div class="table-responsive">
     <h3>Batting Stats</h3>
