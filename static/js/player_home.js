@@ -6,7 +6,7 @@ function player(event) {
 
     else if ($('#search').val() !== '') {
 
-        $.ajax({url: "http://127.0.0.1:8000/api/player-name-api/",
+        $.ajax({url: '/api/player-name-api/',
             data: {'name' : ($('#search').val())},
             cache: false,
             type: "GET",

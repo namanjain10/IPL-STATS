@@ -6,7 +6,7 @@ function player(event,value) {
 
     else if ($('#search'+value).val() !== '') {
 
-        $.ajax({url: "http://127.0.0.1:8000/api/player-name-api/",
+        $.ajax({url: '/api/player-name-api/',
             data: {'name' : ($('#search'+value).val())},
             cache: false,
             type: "GET",
@@ -44,7 +44,7 @@ $("#search_box2").on('click','li',function() {
 
 
 function compare () {
-    $.ajax({url: "http://127.0.0.1:8000/api/player-compare-api",
+    $.ajax({url: '/api/player-compare-api',
         data: {'player_name_1' : $("#search1").val(), 'player_name_2' : $("#search2").val()},
         cache: false,
         type: "GET",
