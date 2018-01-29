@@ -31,7 +31,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['18.218.84.166','iplstatz.tk']
 
-
 # Application definition
 
 INSTALLED_APPS = [
