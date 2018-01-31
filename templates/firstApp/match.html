@@ -3,7 +3,7 @@
 <div class="container row">
     {%for p in match_details %}
     <h5><strong>Match Date</strong> : {{p.Match_Date}}</h5>
-    <h5><strong>Location</strong> : <a href = "/maps/{{p.Venue_Name}}">{{p.Venue_Name}}, {{p.City_Name}}, {{p.Host_Country}}</a></h5>
+    <h5><strong>Location</strong> : <a href = "/maps?stadium={{p.Venue_Name}}&place={{p.City_Name}}">{{p.Venue_Name}}, {{p.City_Name}}, {{p.Host_Country}}</a></h5>
     <h5><strong>Teams</strong> : {{p.Team_Name_Id}} vs {{p.Opponent_Team_Id}}</h5>
 
     {% if p.Win_Type == 'by runs' %}

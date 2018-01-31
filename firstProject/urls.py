@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('firstApp.api.urls')),
 
-    url(r'^maps/(?P<slug>[\w ,]+)/$',views.MapView.as_view()),
+    url(r'^maps/',views.MapView.as_view()), #(?P<slug>[\w ,]+)/$
     url(r'^wickets-match/(?P<id>\d+)/$', views.wicketsMatchView.as_view()),
     url(r'^player/(?P<id>\d+)/$', views.playerView.as_view()),
     url(r'^season/(?P<id>\d+)/$', views.seasonView.as_view()),

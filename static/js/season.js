@@ -11,5 +11,4 @@ $('.showSingle').click(function(){
     $('.season_table').removeClass('active');
     $('#div'+$(this).attr('target')).show();
     $(this).addClass( 'active' );
-
 });

@@ -43,19 +43,21 @@ class SuperoverView (View) :
 
 class MapView(View):
     def get (self, request, *args, **kwargs) :
-        a = kwargs['slug'].replace('%20',' ')
-                
-        content = {'st_name' : a}
+        a = request.GET['stadium']
+        b = request.GET['place']
+
+        print (a,b)
+        content = {'st_name' : a, 'place' : b}
         return render (request,"firstApp/maps.html",content)
 
 class playerView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
         cursor = connection.cursor()
-        
+
         query = Player.objects.filter(Player_Id = player_id).values()
         player = [i for i in query]
-        
+
         player[0]['age_years'] = relativedelta(date.today(),player[0]['DOB']).years
         player[0]['age_months'] = relativedelta(date.today(),player[0]['DOB']).months
         player[0]['age_days'] = relativedelta(date.today(),player[0]['DOB']).days
@@ -139,7 +141,7 @@ class matchView (View) :
 
             query = Ball_by_Ball.objects.filter(Match_Id = match_id, Player_dissimal_Id = batting[i]['Striker_Id']).values()
             outs = [i for i in query]
-            
+
             if len(outs) == 0 :
                 batting[i]['dissimal_type'] = None
 
@@ -272,7 +274,7 @@ class seasonView (View) :
 
         dic = Match.objects.filter(Season_Id = season_id).order_by('Match_Date').values()
         match_details = [i for i in dic]
-        
+
         for j in range (len(match_details)) :
             for i in ('Team_Name_Id','Opponent_Team_Id') :
                 match_details[j][i] = (Team.objects.filter(Team_Id = match_details[j][i]).values('Team_Name')[0]['Team_Name'])
@@ -328,7 +330,7 @@ class TeamView (View) :
         cursor = connection.cursor()
 
         cursor.execute(wins.format(int(team_id)))
-        
+
         # query = Match.objects.filter(Q(Team_Id = team_id) | Q(Opponent_Team_Id = team_id), Match_Winner_Id = team_id).values()
 
         # win = [i for i in query]
@@ -383,10 +385,10 @@ class TeamView (View) :
 class wicketsMatchView (View) :
     def get (self, request, *args, **kwargs) :
         player_id = kwargs['id']
-        
+
         name = Player.objects.filter(Player_Id = int(player_id)).get()
         name = name.Player_Name
-        
+
         cursor = connection.cursor()
         cursor.execute(per_match_bowling.format(int(player_id)))
         bowl = dictfetchall(cursor)
