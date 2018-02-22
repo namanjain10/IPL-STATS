@@ -21,6 +21,32 @@ td {
 /* a{
     color : rgb(10, 137, 255);
 } */
+/* .table-glutter tbody{
+    height:300px;
+    overflow-y:auto;
+    width: 100%;
+    }
+
+.table-glutter thead,tbody,tr,td,th{
+    display:block;
+}
+
+.table-glutter thead {
+    tr{
+      th{
+        float:left;
+       background-color: #f39c12;
+       border-color:#e67e22;
+      }
+    }
+  }
+} */
+
+#topRow {
+    background-color: white;
+    position: sticky;
+    top : 55px;
+}
 
 .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
    background-color: rgb(232, 245, 238);
